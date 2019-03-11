@@ -84,528 +84,226 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  #include &lt;stdio.h&gt;</p>
-<p>  #include &lt;string.h&gt;</p>
-<p>  #include &lt;stdlib.h&gt;</p>
-<p>  #include &lt;conio.h&gt;</p>
-<p>  #include &lt;ctype.h&gt;</p>
-<p>  void menu();<br>  void menu_();<br>  void Input();<br>  void Print();<br>  void Read();<br>  void Save();<br>  void Sorted();<br>  void Modify();<br>  void Insert();<br>  void Delete();<br>  void Search();<br>  void Rent();<br>  void Sorted();<br>  void Statis();<br>  void Sign_in();<br>  void Register();<br>  int isExisted(int n);</p>
-<p>  #define PRINT “<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>***</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>\n”</p>
-<p>  #define PRINT1 “店面号\t  店面名称  \t店主姓名\t店主性别\t店主年龄\t店主联系方式\t店面面积\t店面租金\t店面类型\t店面租赁期限\t店面是否出租\n”</p>
-<p>  typedef struct Shop_infor<br>  {<br>      int num;<br>      char name[20];<br>      char owner[20];<br>      char sex[5];<br>      int old;<br>      char tele[20];<br>      int area;<br>      int rental;<br>      char kind[10];<br>      char year[6];<br>      char isent[5];<br>      struct Shop_infor *next;<br>  }SHOP;</p>
-<p>  //全局变量,定义店面信息链表<br>  SHOP <em>shop=(SHOP </em>)malloc(sizeof(SHOP));<br>  //全局变量,记录节点数<br>  int m=0;</p>
-<p>  //=====================================进入菜单界面========================================<br>  void menu()<br>  {<br>      int x;<br>      do<br>      {<br>          printf(“\n\n\n”);<br>          printf(“\t\t\t\t\t\t<strong><strong><strong><strong>**</strong></strong></strong></strong>欢迎进入店面管理系统<strong><strong><strong><em>**</em></strong></strong></strong>\n”);<br>          printf(“\t\t\t\t\t\t======================================================\n”);<br>          printf(“\t\t\t\t\t\t——★1.添加店面信息\t\t2.浏览店面信息★——\n\n”);<br>          printf(“\t\t\t\t\t\t——★3.修改店面信息\t\t4.删除店面信息★——\n\n”);<br>          printf(“\t\t\t\t\t\t——★5.查找店面信息\t\t6.统计店面数量★——\n\n”);<br>          printf(“\t\t\t\t\t\t——★7.出租店面\t\t8.插入店面信息★——\n\n”);<br>          printf(“\t\t\t\t\t\t———————-★0.退出 ★———————\n”);<br>          printf(“\t\t\t\t\t\t======================================================\n\n”);<br>          printf(PRINT);<br>          printf(“\n\t请选择你所需要的服务:”);<br>          scanf(“%d”,&amp;x);<br>          switch(x)<br>          {<br>              case 1:<br>                  Input();<br>                  Sorted();<br>                  break;<br>              case 2:<br>                  Print();<br>                  break;<br>              case 3:<br>                  Modify();<br>                  break;<br>              case 4:<br>                  Delete();<br>                  break;<br>              case 5:<br>                  Search();<br>                  break;<br>              case 6:<br>                  Statis();<br>                  break;<br>              case 7:<br>                  Rent();<br>                  break;<br>              case 8:<br>                  Insert();<br>                  break;<br>              case 0:<br>                  break;<br>              default:printf(“\n\t你的选项输入有误,请重新输入.\n”);<br>          }<br>      }while(x!=0);<br>  }                                    </p>
-<p>  //=====================================读入信息函数========================================<br>  void Read()<br>  {<br>      SHOP <em>head,</em>p,<em>end;<br>      m=0;//记录店面个数<br>      FILE </em>fp;<br>      head=(SHOP <em>)malloc(sizeof(SHOP));<br>      end=head;<br>      end-&gt;next=NULL;<br>      shop=end;//读取文件中的数据,存放在链表中<br>      fp=fopen(“SA.txt”,”r”);<br>      if(fp==NULL)    //若文件不存在,则创建一个文件<br>      {<br>          fp=fopen(“SA.txt”,”w”);<br>          fclose(fp);<br>          fp=fopen(“SA.txt”,”r”);<br>      }<br>      p=(SHOP </em>)malloc(sizeof(SHOP));//fscanf()函数,若读到文件信息则返回读取个数,否则返回-1(EOF)<br>      while(fscanf(fp,”%d %s %s %s %d %s %d %d %s %s %s\n”,&amp;p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,&amp;p-&gt;old,p-&gt;tele,&amp;p-&gt;area,&amp;p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent)!=EOF)<br>      {<br>          m++;<br>          end-&gt;next=p;<br>          end=p;<br>          p=(SHOP *)malloc(sizeof(SHOP));<br>      }<br>      end-&gt;next=NULL;<br>      fclose(fp);<br>  }</p>
-<p>  //=====================================保存信息函数========================================<br>  void Save()<br>  {<br>      FILE <em>fp;<br>      SHOP </em>p;<br>      p=shop-&gt;next;//让P指向头节点shop,将信息逐个存入文件中<br>      fp=fopen(“SA.txt”,”w”);<br>      if(fp==NULL)<br>      {<br>          printf(“\n\t文件打开失败\n”);<br>          exit(0);<br>      }</p>
-<pre><code>while(p)
+        <p><strong>以下是店面管理系统的代码:</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;conio.h&gt;
+#include &lt;ctype.h&gt;
+
+void menu();
+void menu_();
+void Input();
+void Print();
+void Read();
+void Save();
+void Sorted();
+void Modify();
+void Insert();
+void Delete();
+void Search();
+void Rent();
+void Sorted();
+void Statis();
+void Sign_in();
+void Register();
+int isExisted(int n);
+
+
+#define PRINT &quot;***********************************************************************************************************************************************************\n&quot;
+#define PRINT1 &quot;店面号\t  店面名称  \t店主姓名\t店主性别\t店主年龄\t店主联系方式\t店面面积\t店面租金\t店面类型\t店面租赁期限\t店面是否出租\n&quot;
+
+typedef struct Shop_infor
 {
-    fprintf(fp,&quot;%d %s %s %s %d %s %d %d %s %s %s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
-    p=p-&gt;next;
-}
-fclose(fp);
-</code></pre><p>  }</p>
-<p>  //=====================================判断店面号是否存在函数========================================<br>  int isExisted(int num)<br>  {<br>      int flag=0;<br>      SHOP *p=shop-&gt;next;<br>      if(p==NULL)<br>          return 0;<br>      while(p)//将链表中的店面号遍历,判断店面号是否存在<br>      {<br>          if(p-&gt;num==num)<br>          {<br>              flag=1;//flag作为店面号存在的标志<br>              break;<br>          }<br>          p=p-&gt;next;<br>      }<br>      if(flag==0)<br>          return 0;<br>      else<br>          return 1;<br>  }</p>
-<p>  //=====================================输入店面函数========================================<br>  void Input()<br>  {<br>      SHOP <em>p,</em>s;<br>      char y_n[4];<br>      char tele[20];<br>      int area,rental,old,kind;<br>      int n,year,sex,isent;<br>      int num,is_num;<br>      s=shop;<br>      //尾插法,插入店面信息<br>      while(s-&gt;next!=NULL)<br>      {<br>          s=s-&gt;next;<br>      }<br>      do<br>      {<br>          p=(SHOP *)malloc(sizeof(SHOP));<br>          printf(“\n\n\t开始输入信息:\n”);<br>          while(true)<br>          {<br>              printf(“\n\t请输入店面号:”);<br>              is_num=scanf(“%d”,&amp;num);//scnaf()函数用来判断输入是否合法,若是数字返回输入项数,否则返回0<br>              if(is_num==1)<br>              {<br>                  break;<br>              }<br>              else<br>                  printf(“\n\t你所输入的不是数字店面号,请重新输入数字店面号!\n”);<br>              getchar();<br>              getchar();<br>          }</p>
-<pre><code>    if(!isExisted(num))
+    int num;
+    char name[20];
+    char owner[20];
+    char sex[5];
+    int old;
+    char tele[20];
+    int area;
+    int rental;
+    char kind[10];
+    char year[6];
+    char isent[5];
+    struct Shop_infor * next;
+}SHOP;
+
+//全局变量,定义店面信息链表
+SHOP * shop=(SHOP * )malloc(sizeof(SHOP));
+//全局变量,记录节点数
+int m=0;
+
+
+//=====================================进入菜单界面========================================
+void menu()
+{
+    int x;
+    do
     {
-        p-&gt;num=num;
-        printf(&quot;\n\t请输入店面名称:&quot;);
-        scanf(&quot;%s&quot;,p-&gt;name);
-        printf(&quot;\n\t请输入店主姓名:&quot;);
-        scanf(&quot;%s&quot;,p-&gt;owner);
-
-        while(true)
+        printf(&quot;\n\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t******************欢迎进入店面管理系统****************\n&quot;);
+        printf(&quot;\t\t\t\t\t\t======================================================\n&quot;);
+        printf(&quot;\t\t\t\t\t\t------★1.添加店面信息\t\t2.浏览店面信息★------\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t------★3.修改店面信息\t\t4.删除店面信息★------\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t------★5.查找店面信息\t\t6.统计店面数量★------\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t------★7.出租店面\t\t8.插入店面信息★------\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t----------------------★0.退出 ★---------------------\n&quot;);
+        printf(&quot;\t\t\t\t\t\t======================================================\n\n&quot;);
+        printf(PRINT);
+        printf(&quot;\n\t请选择你所需要的服务:&quot;);
+        scanf(&quot;%d&quot;,&amp;x);
+        switch(x)
         {
-            printf(&quot;\n\t请输入店主性别(输入1.男 或 2.女):&quot;);
-            if(scanf(&quot;%d&quot;,&amp;sex)==1)
-            {
-                if(sex==1 || sex==2)
-                {
-                    switch(sex)
-                    {
-                        case 1:strcpy(p-&gt;sex,&quot;男&quot;);break;
-                        case 2:strcpy(p-&gt;sex,&quot;女&quot;);break;
-                    }
-                    break;
-                }
-                else
-                {
-                    printf(&quot;\n\t你所输入的性别选项不正确!\n&quot;);
-                }
-            }
-            else
-            {
-                printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-            }
-            getchar();
-        }
-
-        while(true)
-        {
-            printf(&quot;\n\t请输入店主年龄:&quot;);
-            if(scanf(&quot;%d&quot;,&amp;p-&gt;old)==1)
-            {
-                break;
-            }
-            else
-            {
-                printf(&quot;\n\t你所输入的不是数字年龄,请重新输入数字年龄!\n&quot;);
-            }
-            getchar();
-            getchar();
-        }
-
-        printf(&quot;\n\t请输入店主电话:&quot;);
-        scanf(&quot;%s&quot;,p-&gt;tele);
-
-        while(true)
-        {
-            printf(&quot;\n\t请输入店面面积:&quot;);        
-            if(scanf(&quot;%d&quot;,&amp;p-&gt;area)==1)
-            {
-                break;
-            }
-            else
-            {
-                printf(&quot;\n\t你输入的店面面积格式格式不正确,请重新输入!\n&quot;);
-            }
-            getchar();
-            getchar();
-        }
-        while(true)
-        {
-            printf(&quot;\n\t请输入店面租金:&quot;);        
-            if(scanf(&quot;%d&quot;,&amp;p-&gt;rental)==1)
-            {
-                break;
-            }
-            else
-                printf(&quot;\n\t你输入的店面租金格式不正确,请重新输入!\n&quot;);
-            getchar();
-            getchar();
-        }
-
-        while(true)
-        {
-            printf(&quot;\n\t请输入店面类型(输入1.私营 2.集体):&quot;);
-            if(scanf(&quot;%d&quot;,&amp;kind)==1)
-            {
-                if(kind==1 || kind==2)
-                {
-                    switch(kind)
-                    {
-                        case 1:strcpy(p-&gt;kind,&quot;私营&quot;);break;
-                        case 2:strcpy(p-&gt;kind,&quot;集体&quot;);break;
-                    }
-                    break;
-                }
-                else
-                {
-                    printf(&quot;\n\t你所输入的店面类型选项不正确,请重新输入!\n&quot;);
-                }
-            }
-            else
-            {
-                printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-            }
-            getchar();
-        }
-
-
-        while(true)
-        {
-            printf(&quot;\n\t请输入租赁期限(输入1.一年 2.两年 3.三年 4.五年):&quot;);
-            if(scanf(&quot;%d&quot;,&amp;year)==1)
-            {
-                if(year==1 || year==2|| year==3 || year==4)
-                {
-                    switch(year)
-                    {
-                        case 1:strcpy(p-&gt;year,&quot;一年&quot;);break;
-                        case 2:strcpy(p-&gt;year,&quot;两年&quot;);break;
-                        case 3:strcpy(p-&gt;year,&quot;三年&quot;);break;
-                        case 4:strcpy(p-&gt;year,&quot;五年&quot;);break;
-                    }
-                    break;
-                }
-                else
-                {
-                    printf(&quot;\n\t你所输入的租赁期限选项不正确,请重新输入!\n&quot;);
-                }
-            }
-            else
-            {
-                printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-            }
-            getchar();
-        }
-
-        while(true)
-        {
-            printf(&quot;\n\t请输入店面是否出租(输入1.是 2.否):&quot;);
-            if(scanf(&quot;%d&quot;,&amp;isent)==1)
-            {
-                if(isent==1 || isent==2)
-                {
-                    switch(isent)
-                    {
-                        case 1:strcpy(p-&gt;isent,&quot;是&quot;);break;
-                        case 2:strcpy(p-&gt;isent,&quot;否&quot;);break;
-                    }
-                    break;
-                }
-                else
-                {
-                    printf(&quot;\n\t你所输入的店面是否出租选项不正确,请重新输入!\n&quot;);
-                }
-            }
-            else
-            {
-                printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-            }
-            getchar();
-        }
-
-        s-&gt;next=p;
-        s=p;
-        s-&gt;next=NULL;
-        m++;//节点数加1
-    }
-    else
-        printf(&quot;\n\t该店面号已存在\n&quot;);
-
-    printf(&quot;\n\t是否要继续输入信息(yes/no):&quot;);
-    scanf(&quot;%s&quot;,y_n);
-}while(strcmp(y_n,&quot;yes&quot;)==0);
-</code></pre><p>  }</p>
-<p>  //=====================================输出店面函数========================================<br>  void Print()<br>  {<br>      SHOP *p=shop-&gt;next;<br>      if(p==NULL)<br>      {<br>          printf(“\n\t暂无店面信息\n”);<br>      }<br>      else<br>      {<br>          printf(“\n\n\t店面信息如下:\n”);<br>          printf(PRINT1);<br>          printf(PRINT);<br>          while(p)<br>          {<br>              printf(“%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n”,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);<br>              p=p-&gt;next;<br>          }<br>          printf(PRINT);<br>          printf(“\n”);<br>      }<br>  }</p>
-<p>  //=====================================修改店面函数========================================<br>  void Modify()<br>  {<br>      SHOP *p=shop-&gt;next;<br>      int n,num;<br>      int choice,flag=0;<br>      int sex,year,kind,isent;<br>      char tele[20];<br>      printf(“\n\n\t请输入你要修改的店面编号:”);<br>      scanf(“%d”,&amp;n);<br>      if(p==NULL)<br>          printf(“\n\t暂无店面信息\n”);<br>      while(p)<br>      {<br>          if(p-&gt;num==n)<br>          {<br>              printf(“\n”);<br>              printf(“\n\t\t\t\t\t\t修改的信息表如下:\n”);<br>              printf(“\n\t\t\t\t\t\t<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>\n”);<br>              printf(“\n\t\t\t\t\t\t★0.店面编号\t\t\t★1.店面名称”);<br>              printf(“\n\t\t\t\t\t\t★2.店主名字\t\t\t★3.店主性别”);<br>              printf(“\n\t\t\t\t\t\t★4.店主年龄\t\t\t★5.店主电话”);<br>              printf(“\n\t\t\t\t\t\t★6.店面面积\t\t\t★7.店面类型”);<br>              printf(“\n\t\t\t\t\t\t★8.租赁期限\t\t\t★9.出租状态\n”);<br>              printf(“\n\t\t\t\t\t\t<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>\n”);<br>              printf(“\n\t请输入你的修改选项(0-9):”);<br>              scanf(“%d”,&amp;choice);<br>              switch(choice)<br>              {<br>                  case 0:</p>
-<pre><code>                while(true)
-                {
-                    printf(&quot;\n\t请输入店面号:&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;num)==1)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字店面号,请重新输入数字店面号!\n&quot;);
-                    }
-                    getchar();
-                    getchar();
-                }
-                if(!isExisted(num))
-                {
-                    p-&gt;num=num;
-                }
-                break;
             case 1:
-                printf(&quot;\n\t请输入新的店面名称:&quot;);
-                scanf(&quot;%s&quot;,p-&gt;name);
+                Input();
+                Sorted();
                 break;
             case 2:
-                printf(&quot;\n\t请输入新的店主名字:&quot;);
-                scanf(&quot;%s&quot;,p-&gt;owner);
+                Print();
                 break;
             case 3:
-
-                while(true)
-                {
-                    printf(&quot;\n\t请输入店主性别(输入1.男 或 2.女):&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;sex)==1)
-                    {
-                            if(sex==1 || sex==2)
-                            {
-                                switch(sex)
-                                {
-                                    case 1:strcpy(p-&gt;sex,&quot;男&quot;);break;
-                                    case 2:strcpy(p-&gt;sex,&quot;女&quot;);break;
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                printf(&quot;\n\t你所输入的性别选项不正确!\n&quot;);
-                            }
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-                    }
-                    getchar();
-                }
+                Modify();
                 break;
             case 4:
-                while(true)
-                {
-                    printf(&quot;\n\t请输入店主年龄:&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;p-&gt;old)==1)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字年龄,请重新输入数字年龄!\n&quot;);
-                    }
-                    getchar();
-                    getchar();
-                }
+                Delete();
                 break;
             case 5:
-                printf(&quot;\n\t请输入新的店主电话:&quot;);
-                scanf(&quot;%s&quot;,p-&gt;tele);
+                Search();
                 break;
             case 6:
-                while(true)
-                {
-                    printf(&quot;\n\t请输入店面面积:&quot;);        
-                    if(scanf(&quot;%d&quot;,&amp;p-&gt;area)==1)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你输入的店面面积格式格式不正确,请重新输入!\n&quot;);
-                    }
-                    getchar();
-                    getchar();
-                }
+                Statis();
                 break;
             case 7:
-
-                while(true)
-                {
-                    printf(&quot;\n\t请输入店面类型(输入1.私营 2.集体):&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;kind)==1)
-                    {
-                            if(kind==1 || kind==2)
-                            {
-                                switch(kind)
-                                {
-                                    case 1:strcpy(p-&gt;kind,&quot;私营&quot;);break;
-                                    case 2:strcpy(p-&gt;kind,&quot;集体&quot;);break;
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                printf(&quot;\n\t你所输入的店面类型选项不正确,请重新输入!\n&quot;);
-                            }
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-                    }
-                    getchar();
-                }
+                Rent();
                 break;
             case 8:
-
-                while(true)
-                {
-                    printf(&quot;\n\t请输入租赁期限(输入1.一年 2.两年 3.三年 4.五年):&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;year)==1)
-                    {
-                            if(year==1 || year==2|| year==3 || year==4)
-                            {
-                                switch(year)
-                                {
-                                    case 1:strcpy(p-&gt;year,&quot;一年&quot;);break;
-                                    case 2:strcpy(p-&gt;year,&quot;两年&quot;);break;
-                                    case 3:strcpy(p-&gt;year,&quot;三年&quot;);break;
-                                    case 4:strcpy(p-&gt;year,&quot;五年&quot;);break;
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                printf(&quot;\n\t你所输入的租赁期限选项不正确,请重新输入!\n&quot;);
-                            }
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-                    }
-                    getchar();
-                }
+                Insert();
                 break;
-            case 9:
-
-                while(true)
-                {
-                    printf(&quot;\n\t请输入店面是否出租(输入1.是 2.否):&quot;);
-                    if(scanf(&quot;%d&quot;,&amp;isent)==1)
-                    {
-                            if(isent==1 || isent==2)
-                            {
-                                switch(isent)
-                                {
-                                    case 1:strcpy(p-&gt;isent,&quot;是&quot;);break;
-                                    case 2:strcpy(p-&gt;isent,&quot;否&quot;);break;
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                printf(&quot;\n\t你所输入的是否出租选项不正确,请重新输入!\n&quot;);
-                            }
-                    }
-                    else
-                    {
-                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
-                    }
-                    getchar();
-                }
+            case 0:
                 break;
+            default:printf(&quot;\n\t你的选项输入有误,请重新输入.\n&quot;);
         }
-        printf(&quot;\n\t店面信息修改成功!\n&quot;);
-        flag=1;
-        break;
-    }
-    p=p-&gt;next;
-}
-if(flag==0)
-    printf(&quot;\n\t输入店面编号不存在或格式错误!\n&quot;);
-</code></pre><p>  }</p>
-<p>  //=====================================查询店面函数========================================<br>  void Search()      /<em>按条件查询信息函数</em>/<br>  {<br>      int choice,flag,biaoji=0;<br>      int numb;<br>      char y_n[4];<br>      char tel[20];<br>      char name[20];<br>      char owner[20];</p>
-<pre><code>do
+    }while(x!=0);
+}                                    
+
+
+//=====================================读入信息函数========================================
+void Read()
 {
-    SHOP *p=shop-&gt;next;
-    printf(&quot;\n\t\t\t\t\t选择查询表:\n&quot;);
-    printf(&quot;\n\t\t\t\t\t==========================================\n&quot;);
-    printf(&quot;\t\t\t\t\t\t★1.按店面编号查询        ★2.按店主姓名查询\n\n&quot;);
-    printf(&quot;\t\t\t\t\t\t★3.按店主电话查找        ★4.按店面名称查询\n\n&quot;);
-    printf(&quot;\t\t\t\t\t\t***************★0.返回★*****************\n&quot;);
-    printf(&quot;\n\t\t==========================================\n&quot;);
-
-    while(true)
+    SHOP * head,* p,* end;
+    m=0;//记录店面个数
+    FILE * fp;
+    head=(SHOP * )malloc(sizeof(SHOP));
+    end=head;
+    end-&gt;next=NULL;
+    shop=end;//读取文件中的数据,存放在链表中
+    fp=fopen(&quot;SA.txt&quot;,&quot;r&quot;);
+    if(fp==NULL)    //若文件不存在,则创建一个文件
     {
-        printf(&quot;\n\t请输入查询类型(0-4):&quot;);
-        if(scanf(&quot;%d&quot;,&amp;choice)==1)
+        fp=fopen(&quot;SA.txt&quot;,&quot;w&quot;);
+        fclose(fp);
+        fp=fopen(&quot;SA.txt&quot;,&quot;r&quot;);
+    }
+    p=(SHOP * )malloc(sizeof(SHOP));//fscanf()函数,若读到文件信息则返回读取个数,否则返回-1(EOF)
+    while(fscanf(fp,&quot;%d %s %s %s %d %s %d %d %s %s %s\n&quot;,&amp;p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,&amp;p-&gt;old,p-&gt;tele,&amp;p-&gt;area,&amp;p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent)!=EOF)
+    {
+        m++;
+        end-&gt;next=p;
+        end=p;
+        p=(SHOP * )malloc(sizeof(SHOP));
+    }
+    end-&gt;next=NULL;
+    fclose(fp);
+}
+
+
+//=====================================保存信息函数========================================
+void Save()
+{
+    FILE * fp;
+    SHOP * p;
+    p=shop-&gt;next;//让P指向头节点shop,将信息逐个存入文件中
+    fp=fopen(&quot;SA.txt&quot;,&quot;w&quot;);
+    if(fp==NULL)
+    {
+        printf(&quot;\n\t文件打开失败\n&quot;);
+        exit(0);
+    }
+
+    while(p)
+    {
+        fprintf(fp,&quot;%d %s %s %s %d %s %d %d %s %s %s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+        p=p-&gt;next;
+    }
+    fclose(fp);
+}
+
+
+//=====================================判断店面号是否存在函数========================================
+int isExisted(int num)
+{
+    int flag=0;
+    SHOP * p=shop-&gt;next;
+    if(p==NULL)
+        return 0;
+    while(p)//将链表中的店面号遍历,判断店面号是否存在
+    {
+        if(p-&gt;num==num)
+        {
+            flag=1;//flag作为店面号存在的标志
             break;
-        else
-        {
-            printf(&quot;\n\t你输入的查询选项输入有误,请重新输入!\n&quot;);
         }
-        getchar();
-        getchar();
+        p=p-&gt;next;
     }
-    if(choice==0)
-    {
-        break;
-    }
+    if(flag==0)
+        return 0;
     else
-    {
-        switch(choice)      
-        {
-            case 1:
-                biaoji=0;
-                printf(&quot;\n\t请输入店面号:&quot;);
-                scanf(&quot;%d&quot;,&amp;numb);
-                while(p!=NULL)
-                {
-                    if(p-&gt;num==numb)
-                    {
-                        printf(PRINT);
-                        printf(PRINT1);
-                        printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
-                        printf(PRINT);
-                        biaoji=1;
-                    }
-                    p=p-&gt;next;
-                }
-                if(biaoji==0)
-                    printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
-                break;
-            case 2:
-                biaoji=0;
-                printf(&quot;\n\t请输入店主姓名:&quot;);
-                scanf(&quot;%s&quot;,owner);
-                while(p!=NULL)
-                {
-                    if(strcmp(p-&gt;owner,owner)==0)
-                    {
-                        printf(PRINT);
-                        printf(PRINT1);
-                        printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
-                        printf(PRINT);
-                        biaoji=1;
-                    }
-                    p=p-&gt;next;
-                }
-                if(biaoji==0)
-                    printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
-                break;
-            case 3:
-                biaoji=0;
-                printf(&quot;\n\t请输入店主电话:&quot;);        
-                scanf(&quot;%s&quot;,tel);
-                while(p!=NULL)
-                {
-                    if(strcmp(p-&gt;tele,tel)==0)
-                    {
-                        printf(PRINT);
-                        printf(PRINT1);
-                        printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
-                        printf(PRINT);
-                        biaoji=1;
-                    }
-                    p=p-&gt;next;
-                }
-                if(biaoji==0)
-                    printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
-                break;
-            case 4:
-                biaoji=0;
-                printf(&quot;\n\t请输入店面名称:&quot;);
-                scanf(&quot;%s&quot;,name);
-                while(p!=NULL)
-                {
-                    if(strcmp(p-&gt;name,name)==0)
-                    {
-                        printf(PRINT);
-                        printf(PRINT1);
-                        printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
-                        printf(PRINT);
-                        biaoji=1;
-                    }
-                    p=p-&gt;next;
-                }
+        return 1;
+}
 
-                if(biaoji==0)
-                    printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
-                break;
-            default: printf(&quot;\n\t查询方式错误,请输入正确的查询方式!\n&quot;);
-        }
+
+//=====================================输入店面函数========================================
+void Input()
+{
+    SHOP * p,* s;
+    char y_n[4];
+    char tele[20];
+    int area,rental,old,kind;
+    int n,year,sex,isent;
+    int num,is_num;
+    s=shop;
+    //尾插法,插入店面信息
+    while(s-&gt;next!=NULL)
+    {
+        s=s-&gt;next;
     }
-    printf(&quot;\n&quot;);                                
-    printf(&quot;\n\t是否要继续查询(yes/no):&quot;);    
-    scanf(&quot;%s&quot;,y_n);
-    flag=(!(strcmp(y_n,&quot;yes&quot;)));
-}while(flag);
-</code></pre><p>  }</p>
-<p>  //=====================================插入店面函数========================================<br>  void Insert()<br>  {<br>      int i,flag=0;<br>      int year,sex,n,isent,kind;<br>      int numb,num;<br>      char tele[20];<br>      SHOP <em> p;<br>      SHOP  </em> s=shop-&gt;next;<br>      printf(“\n\t请输入你要插入的位置(插入哪一个店面编号后):”);<br>      scanf(“%d”,&amp;numb);<br>      while(s)<br>      {<br>          if(s-&gt;num==numb)<br>          {<br>              flag=1;<br>              break;<br>          }<br>          s=s-&gt;next;<br>      }<br>      if(flag==0)<br>          printf(“\n\t你所输入的店面号不存在\n”);<br>      else<br>      {<br>          p=(SHOP * )malloc(sizeof(SHOP));<br>          while(true)<br>          {</p>
-<pre><code>        while(true)
+    do
+    {
+        p=(SHOP * )malloc(sizeof(SHOP));
+        printf(&quot;\n\n\t开始输入信息:\n&quot;);
+        while(true)
         {
             printf(&quot;\n\t请输入店面号:&quot;);
-            if(scanf(&quot;%d&quot;,&amp;num)==1)
+            is_num=scanf(&quot;%d&quot;,&amp;num);//scnaf()函数用来判断输入是否合法,若是数字返回输入项数,否则返回0
+            if(is_num==1)
             {
                 break;
             }
             else
-            {
-                printf(&quot;\n\n\t你所输入的不是数字,请重新输入数字!\n&quot;);
-            }
+                printf(&quot;\n\t你所输入的不是数字店面号,请重新输入数字店面号!\n&quot;);
             getchar();
             getchar();
         }
-        if(!isExisted(num))    //判断店面号是否存在
+
+        if(!isExisted(num))
         {
             p-&gt;num=num;
             printf(&quot;\n\t请输入店面名称:&quot;);
             scanf(&quot;%s&quot;,p-&gt;name);
             printf(&quot;\n\t请输入店主姓名:&quot;);
             scanf(&quot;%s&quot;,p-&gt;owner);
+
             while(true)
             {
                 printf(&quot;\n\t请输入店主性别(输入1.男 或 2.女):&quot;);
@@ -647,7 +345,7 @@ if(flag==0)
                 getchar();
             }
 
-            printf(&quot;\n\n\t请输入店主电话:&quot;);
+            printf(&quot;\n\t请输入店主电话:&quot;);
             scanf(&quot;%s&quot;,p-&gt;tele);
 
             while(true)
@@ -664,7 +362,6 @@ if(flag==0)
                 getchar();
                 getchar();
             }
-
             while(true)
             {
                 printf(&quot;\n\t请输入店面租金:&quot;);        
@@ -703,6 +400,7 @@ if(flag==0)
                 }
                 getchar();
             }
+
 
             while(true)
             {
@@ -757,158 +455,960 @@ if(flag==0)
                 }
                 getchar();
             }
-            m++;
-            p-&gt;next=s-&gt;next;
+
             s-&gt;next=p;
-            break;
+            s=p;
+            s-&gt;next=NULL;
+            m++;//节点数加1
         }
         else
-            printf(&quot;\n\t该店面号已存在,请重新输入.\n&quot;);
-        getchar();
-    }
-    printf(&quot;\n\t插入信息成功!\n&quot;);
-}
-</code></pre><p>  }</p>
-<p>  //=====================================店面排序函数========================================<br>  void Sorted()<br>  {<br>      SHOP <em> p,</em> s,<em> temp,</em> t;<br>      int i,j;<br>      for(i=0;i&lt;m-1;i++)<br>      {<br>          p=shop-&gt;next;<br>          s=p-&gt;next;<br>          temp=shop;<br>          for(j=0;j&lt;m-1-i;j++)<br>          {<br>              if(strcmp(p-&gt;name,s-&gt;name)&gt;0)<br>              {<br>                  p-&gt;next=s-&gt;next;<br>                  s-&gt;next=p;<br>                  temp-&gt;next=s;<br>                  t=s;<br>                  s=p;<br>                  p=t;<br>              }<br>              p=p-&gt;next;<br>              s=s-&gt;next;<br>              temp=temp-&gt;next;</p>
-<pre><code>    }
+            printf(&quot;\n\t该店面号已存在\n&quot;);
+
+        printf(&quot;\n\t是否要继续输入信息(yes/no):&quot;);
+        scanf(&quot;%s&quot;,y_n);
+    }while(strcmp(y_n,&quot;yes&quot;)==0);
+
 }
 
-//Save();
-</code></pre><p>  }</p>
-<p>  //=====================================删除店面函数========================================<br>  void Delete()<br>  {<br>      int i,flag=0;<br>      int n;<br>      SHOP <em> p,</em> Temp=shop;<br>      p=shop-&gt;next;<br>      printf(“\n\t请输入你要删除的店面编号:”);<br>      scanf(“%d”,&amp;n);<br>      if(p==NULL)<br>      {<br>          printf(“\n\t暂无店面信息!\n”);<br>      }<br>      while(p)<br>      {<br>          if(p-&gt;num==n)<br>          {<br>              Temp-&gt;next=p-&gt;next;<br>              free(p);<br>              printf(“\n\t删除成功!\n”);<br>              flag=1;<br>              break;<br>          }<br>          Temp=p;<br>          p=p-&gt;next;<br>      }<br>      if(flag==0)<br>          printf(“\n\t你所输入的店面号不存在\n”);<br>  }</p>
-<p>  //=====================================统计店面函数========================================<br>  void Statis()<br>  {<br>      int sy=0,jt=0;<br>      int y1=0,y2=0,y3=0,y5=0;<br>      int yes=0,no=0;<br>      int i;<br>      struct Shop_infor * p=shop-&gt;next;<br>      do<br>      {<br>          if(strcmp(p-&gt;kind,”私营”)==0)<br>          {<br>              sy++;<br>          }<br>          if(strcmp(p-&gt;kind,”集体”)==0)<br>          {<br>              jt++;<br>          }</p>
-<pre><code>    if(strcmp(p-&gt;year,&quot;一年&quot;)==0)
-    {
-        y1++;
-    }
-    if(strcmp(p-&gt;year,&quot;两年&quot;)==0)
-    {
-        y2++;
-    }
-    if(strcmp(p-&gt;year,&quot;三年&quot;)==0)
-    {
-        y3++;
-    }
-    if(strcmp(p-&gt;year,&quot;五年&quot;)==0)
-    {
-        y5++;
-    }
-    if(strcmp(p-&gt;isent,&quot;是&quot;)==0)
-    {
-        yes++;
-    }
-    if(strcmp(p-&gt;isent,&quot;否&quot;)==0)
-    {
-        no++;
-    }
-    p=p-&gt;next;
-}while(p!=NULL);
 
-printf(&quot;\n\t\t\t\t\t\t\t\t店面统计结果:\n&quot;);
-printf(&quot;\t\t\t\t\t\t\t===================================\t\t\n&quot;);            
-printf(&quot;\t\t\t\t\t\t\t私营店面: %d        集体店面: %d\n&quot;,sy,jt);
-printf(&quot;\t\t\t\t\t\t\t一年店面: %d        两年店面: %d\n&quot;,y1,y2);
-printf(&quot;\t\t\t\t\t\t\t三年店面: %d        五年店面: %d\n&quot;,y3,y5);
-printf(&quot;\t\t\t\t\t\t\t出租店面: %d        拒租店面: %d\n&quot;,yes,no);
-printf(&quot;\t\t\t\t\t\t\t===================================\t\t\n&quot;);  
-</code></pre><p>  }</p>
-<p>  //=====================================出租店面函数========================================<br>  void Rent()<br>  {<br>      int flag=0;<br>      int num;<br>      char y_n[4];<br>      SHOP * p=shop-&gt;next;</p>
-<pre><code>do
+//=====================================输出店面函数========================================
+void Print()
 {
-
-    while(true)
+    SHOP * p=shop-&gt;next;
+    if(p==NULL)
     {
-        printf(&quot;\n\t请输入店面号:&quot;);
-        if(scanf(&quot;%d&quot;,&amp;num)==1)
+        printf(&quot;\n\t暂无店面信息\n&quot;);
+    }
+    else
+    {
+        printf(&quot;\n\n\t店面信息如下:\n&quot;);
+        printf(PRINT1);
+        printf(PRINT);
+        while(p)
+        {
+            printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+            p=p-&gt;next;
+        }
+        printf(PRINT);
+        printf(&quot;\n&quot;);
+    }
+}
+
+
+//=====================================修改店面函数========================================
+void Modify()
+{
+    SHOP * p=shop-&gt;next;
+    int n,num;
+    int choice,flag=0;
+    int sex,year,kind,isent;
+    char tele[20];
+    printf(&quot;\n\n\t请输入你要修改的店面编号:&quot;);
+    scanf(&quot;%d&quot;,&amp;n);
+    if(p==NULL)
+        printf(&quot;\n\t暂无店面信息\n&quot;);
+    while(p)
+    {
+        if(p-&gt;num==n)
+        {
+            printf(&quot;\n&quot;);
+            printf(&quot;\n\t\t\t\t\t\t修改的信息表如下:\n&quot;);
+            printf(&quot;\n\t\t\t\t\t\t********************************************\n&quot;);
+            printf(&quot;\n\t\t\t\t\t\t★0.店面编号\t\t\t★1.店面名称&quot;);
+            printf(&quot;\n\t\t\t\t\t\t★2.店主名字\t\t\t★3.店主性别&quot;);
+            printf(&quot;\n\t\t\t\t\t\t★4.店主年龄\t\t\t★5.店主电话&quot;);
+            printf(&quot;\n\t\t\t\t\t\t★6.店面面积\t\t\t★7.店面类型&quot;);
+            printf(&quot;\n\t\t\t\t\t\t★8.租赁期限\t\t\t★9.出租状态\n&quot;);
+            printf(&quot;\n\t\t\t\t\t\t********************************************\n&quot;);
+            printf(&quot;\n\t请输入你的修改选项(0-9):&quot;);
+            scanf(&quot;%d&quot;,&amp;choice);
+            switch(choice)
+            {
+                case 0:
+
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店面号:&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;num)==1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字店面号,请重新输入数字店面号!\n&quot;);
+                        }
+                        getchar();
+                        getchar();
+                    }
+                    if(!isExisted(num))
+                    {
+                        p-&gt;num=num;
+                    }
+                    break;
+                case 1:
+                    printf(&quot;\n\t请输入新的店面名称:&quot;);
+                    scanf(&quot;%s&quot;,p-&gt;name);
+                    break;
+                case 2:
+                    printf(&quot;\n\t请输入新的店主名字:&quot;);
+                    scanf(&quot;%s&quot;,p-&gt;owner);
+                    break;
+                case 3:
+
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店主性别(输入1.男 或 2.女):&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;sex)==1)
+                        {
+                                if(sex==1 || sex==2)
+                                {
+                                    switch(sex)
+                                    {
+                                        case 1:strcpy(p-&gt;sex,&quot;男&quot;);break;
+                                        case 2:strcpy(p-&gt;sex,&quot;女&quot;);break;
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    printf(&quot;\n\t你所输入的性别选项不正确!\n&quot;);
+                                }
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                        }
+                        getchar();
+                    }
+                    break;
+                case 4:
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店主年龄:&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;p-&gt;old)==1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字年龄,请重新输入数字年龄!\n&quot;);
+                        }
+                        getchar();
+                        getchar();
+                    }
+                    break;
+                case 5:
+                    printf(&quot;\n\t请输入新的店主电话:&quot;);
+                    scanf(&quot;%s&quot;,p-&gt;tele);
+                    break;
+                case 6:
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店面面积:&quot;);        
+                        if(scanf(&quot;%d&quot;,&amp;p-&gt;area)==1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你输入的店面面积格式格式不正确,请重新输入!\n&quot;);
+                        }
+                        getchar();
+                        getchar();
+                    }
+                    break;
+                case 7:
+
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店面类型(输入1.私营 2.集体):&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;kind)==1)
+                        {
+                                if(kind==1 || kind==2)
+                                {
+                                    switch(kind)
+                                    {
+                                        case 1:strcpy(p-&gt;kind,&quot;私营&quot;);break;
+                                        case 2:strcpy(p-&gt;kind,&quot;集体&quot;);break;
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    printf(&quot;\n\t你所输入的店面类型选项不正确,请重新输入!\n&quot;);
+                                }
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                        }
+                        getchar();
+                    }
+                    break;
+                case 8:
+
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入租赁期限(输入1.一年 2.两年 3.三年 4.五年):&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;year)==1)
+                        {
+                                if(year==1 || year==2|| year==3 || year==4)
+                                {
+                                    switch(year)
+                                    {
+                                        case 1:strcpy(p-&gt;year,&quot;一年&quot;);break;
+                                        case 2:strcpy(p-&gt;year,&quot;两年&quot;);break;
+                                        case 3:strcpy(p-&gt;year,&quot;三年&quot;);break;
+                                        case 4:strcpy(p-&gt;year,&quot;五年&quot;);break;
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    printf(&quot;\n\t你所输入的租赁期限选项不正确,请重新输入!\n&quot;);
+                                }
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                        }
+                        getchar();
+                    }
+                    break;
+                case 9:
+
+                    while(true)
+                    {
+                        printf(&quot;\n\t请输入店面是否出租(输入1.是 2.否):&quot;);
+                        if(scanf(&quot;%d&quot;,&amp;isent)==1)
+                        {
+                                if(isent==1 || isent==2)
+                                {
+                                    switch(isent)
+                                    {
+                                        case 1:strcpy(p-&gt;isent,&quot;是&quot;);break;
+                                        case 2:strcpy(p-&gt;isent,&quot;否&quot;);break;
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    printf(&quot;\n\t你所输入的是否出租选项不正确,请重新输入!\n&quot;);
+                                }
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                        }
+                        getchar();
+                    }
+                    break;
+            }
+            printf(&quot;\n\t店面信息修改成功!\n&quot;);
+            flag=1;
+            break;
+        }
+        p=p-&gt;next;
+    }
+    if(flag==0)
+        printf(&quot;\n\t输入店面编号不存在或格式错误!\n&quot;);
+}
+
+
+//=====================================查询店面函数========================================
+void Search()     
+{
+    int choice,flag,biaoji=0;
+    int numb;
+    char y_n[4];
+    char tel[20];
+    char name[20];
+    char owner[20];
+
+    do
+    {
+        SHOP * p=shop-&gt;next;
+        printf(&quot;\n\t\t\t\t\t选择查询表:\n&quot;);
+        printf(&quot;\n\t\t\t\t\t==========================================\n&quot;);
+        printf(&quot;\t\t\t\t\t\t★1.按店面编号查询        ★2.按店主姓名查询\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t★3.按店主电话查找        ★4.按店面名称查询\n\n&quot;);
+        printf(&quot;\t\t\t\t\t\t***************★0.返回★*****************\n&quot;);
+        printf(&quot;\n\t\t==========================================\n&quot;);
+
+        while(true)
+        {
+            printf(&quot;\n\t请输入查询类型(0-4):&quot;);
+            if(scanf(&quot;%d&quot;,&amp;choice)==1)
+                break;
+            else
+            {
+                printf(&quot;\n\t你输入的查询选项输入有误,请重新输入!\n&quot;);
+            }
+            getchar();
+            getchar();
+        }
+        if(choice==0)
         {
             break;
         }
         else
         {
-            printf(&quot;\n\n\t你所输入的不是数字,请重新输入数字!\n&quot;);
+            switch(choice)      
+            {
+                case 1:
+                    biaoji=0;
+                    printf(&quot;\n\t请输入店面号:&quot;);
+                    scanf(&quot;%d&quot;,&amp;numb);
+                    while(p!=NULL)
+                    {
+                        if(p-&gt;num==numb)
+                        {
+                            printf(PRINT);
+                            printf(PRINT1);
+                            printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+                            printf(PRINT);
+                            biaoji=1;
+                        }
+                        p=p-&gt;next;
+                    }
+                    if(biaoji==0)
+                        printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
+                    break;
+                case 2:
+                    biaoji=0;
+                    printf(&quot;\n\t请输入店主姓名:&quot;);
+                    scanf(&quot;%s&quot;,owner);
+                    while(p!=NULL)
+                    {
+                        if(strcmp(p-&gt;owner,owner)==0)
+                        {
+                            printf(PRINT);
+                            printf(PRINT1);
+                            printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+                            printf(PRINT);
+                            biaoji=1;
+                        }
+                        p=p-&gt;next;
+                    }
+                    if(biaoji==0)
+                        printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
+                    break;
+                case 3:
+                    biaoji=0;
+                    printf(&quot;\n\t请输入店主电话:&quot;);        
+                    scanf(&quot;%s&quot;,tel);
+                    while(p!=NULL)
+                    {
+                        if(strcmp(p-&gt;tele,tel)==0)
+                        {
+                            printf(PRINT);
+                            printf(PRINT1);
+                            printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+                            printf(PRINT);
+                            biaoji=1;
+                        }
+                        p=p-&gt;next;
+                    }
+                    if(biaoji==0)
+                        printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
+                    break;
+                case 4:
+                    biaoji=0;
+                    printf(&quot;\n\t请输入店面名称:&quot;);
+                    scanf(&quot;%s&quot;,name);
+                    while(p!=NULL)
+                    {
+                        if(strcmp(p-&gt;name,name)==0)
+                        {
+                            printf(PRINT);
+                            printf(PRINT1);
+                            printf(&quot;%-2d\t%-8s\t%-4s\t\t%-2s\t\t%-2d\t\t%-11s\t  %-3d\t\t%-6d\t  %-4s\t\t   %-6s\t\t%-3s\n&quot;,p-&gt;num,p-&gt;name,p-&gt;owner,p-&gt;sex,p-&gt;old,p-&gt;tele,p-&gt;area,p-&gt;rental,p-&gt;kind,p-&gt;year,p-&gt;isent);
+                            printf(PRINT);
+                            biaoji=1;
+                        }
+                        p=p-&gt;next;
+                    }
+
+                    if(biaoji==0)
+                        printf(&quot;\n\t没有所要查询的店面信息或所输入的查询要求错误!\n&quot;);
+                    break;
+                default: printf(&quot;\n\t查询方式错误,请输入正确的查询方式!\n&quot;);
+            }
         }
-        getchar();
-        getchar();
-    }
-    while(p!=NULL)
+        printf(&quot;\n&quot;);                                
+        printf(&quot;\n\t是否要继续查询(yes/no):&quot;);    
+        scanf(&quot;%s&quot;,y_n);
+        flag=(!(strcmp(y_n,&quot;yes&quot;)));
+    }while(flag);
+}
+
+
+//=====================================插入店面函数========================================
+void Insert()
+{
+    int i,flag=0;
+    int year,sex,n,isent,kind;
+    int numb,num;
+    char tele[20];
+    SHOP * p;
+    SHOP  * s=shop-&gt;next;
+    printf(&quot;\n\t请输入你要插入的位置(插入哪一个店面编号后):&quot;);
+    scanf(&quot;%d&quot;,&amp;numb);
+    while(s)
     {
-        if(p-&gt;num==num)
+        if(s-&gt;num==numb)
         {
-            if(strcmp(p-&gt;isent,&quot;否&quot;)==0)
+            flag=1;
+            break;
+        }
+        s=s-&gt;next;
+    }
+    if(flag==0)
+        printf(&quot;\n\t你所输入的店面号不存在\n&quot;);
+    else
+    {
+        p=(SHOP * )malloc(sizeof(SHOP));
+        while(true)
+        {
+
+            while(true)
+            {
+                printf(&quot;\n\t请输入店面号:&quot;);
+                if(scanf(&quot;%d&quot;,&amp;num)==1)
+                {
+                    break;
+                }
+                else
+                {
+                    printf(&quot;\n\n\t你所输入的不是数字,请重新输入数字!\n&quot;);
+                }
+                getchar();
+                getchar();
+            }
+            if(!isExisted(num))    //判断店面号是否存在
+            {
+                p-&gt;num=num;
+                printf(&quot;\n\t请输入店面名称:&quot;);
+                scanf(&quot;%s&quot;,p-&gt;name);
+                printf(&quot;\n\t请输入店主姓名:&quot;);
+                scanf(&quot;%s&quot;,p-&gt;owner);
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店主性别(输入1.男 或 2.女):&quot;);
+                    if(scanf(&quot;%d&quot;,&amp;sex)==1)
+                    {
+                        if(sex==1 || sex==2)
+                        {
+                            switch(sex)
+                            {
+                                case 1:strcpy(p-&gt;sex,&quot;男&quot;);break;
+                                case 2:strcpy(p-&gt;sex,&quot;女&quot;);break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的性别选项不正确!\n&quot;);
+                        }
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                    }
+                    getchar();
+                }
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店主年龄:&quot;);
+                    if(scanf(&quot;%d&quot;,&amp;p-&gt;old)==1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你所输入的不是数字年龄,请重新输入数字年龄!\n&quot;);
+                    }
+                    getchar();
+                    getchar();
+                }
+
+                printf(&quot;\n\n\t请输入店主电话:&quot;);
+                scanf(&quot;%s&quot;,p-&gt;tele);
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店面面积:&quot;);        
+                    if(scanf(&quot;%d&quot;,&amp;p-&gt;area)==1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你输入的店面面积格式格式不正确,请重新输入!\n&quot;);
+                    }
+                    getchar();
+                    getchar();
+                }
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店面租金:&quot;);        
+                    if(scanf(&quot;%d&quot;,&amp;p-&gt;rental)==1)
+                    {
+                        break;
+                    }
+                    else
+                        printf(&quot;\n\t你输入的店面租金格式不正确,请重新输入!\n&quot;);
+                    getchar();
+                    getchar();
+                }
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店面类型(输入1.私营 2.集体):&quot;);
+                    if(scanf(&quot;%d&quot;,&amp;kind)==1)
+                    {
+                        if(kind==1 || kind==2)
+                        {
+                            switch(kind)
+                            {
+                                case 1:strcpy(p-&gt;kind,&quot;私营&quot;);break;
+                                case 2:strcpy(p-&gt;kind,&quot;集体&quot;);break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的店面类型选项不正确,请重新输入!\n&quot;);
+                        }
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                    }
+                    getchar();
+                }
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入租赁期限(输入1.一年 2.两年 3.三年 4.五年):&quot;);
+                    if(scanf(&quot;%d&quot;,&amp;year)==1)
+                    {
+                        if(year==1 || year==2|| year==3 || year==4)
+                        {
+                            switch(year)
+                            {
+                                case 1:strcpy(p-&gt;year,&quot;一年&quot;);break;
+                                case 2:strcpy(p-&gt;year,&quot;两年&quot;);break;
+                                case 3:strcpy(p-&gt;year,&quot;三年&quot;);break;
+                                case 4:strcpy(p-&gt;year,&quot;五年&quot;);break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的租赁期限选项不正确,请重新输入!\n&quot;);
+                        }
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                    }
+                    getchar();
+                }
+
+                while(true)
+                {
+                    printf(&quot;\n\t请输入店面是否出租(输入1.是 2.否):&quot;);
+                    if(scanf(&quot;%d&quot;,&amp;isent)==1)
+                    {
+                        if(isent==1 || isent==2)
+                        {
+                            switch(isent)
+                            {
+                                case 1:strcpy(p-&gt;isent,&quot;是&quot;);break;
+                                case 2:strcpy(p-&gt;isent,&quot;否&quot;);break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf(&quot;\n\t你所输入的店面是否出租选项不正确,请重新输入!\n&quot;);
+                        }
+                    }
+                    else
+                    {
+                        printf(&quot;\n\t你所输入的不是数字选项,请重新输入数字选项!\n&quot;);
+                    }
+                    getchar();
+                }
+                m++;
+                p-&gt;next=s-&gt;next;
+                s-&gt;next=p;
+                break;
+            }
+            else
+                printf(&quot;\n\t该店面号已存在,请重新输入.\n&quot;);
+            getchar();
+        }
+        printf(&quot;\n\t插入信息成功!\n&quot;);
+    }
+}
+
+
+//=====================================店面排序函数========================================
+void Sorted()
+{
+    SHOP * p,* s,* temp,* t;
+    int i,j;
+    for(i=0;i&lt;m-1;i++)
+    {
+        p=shop-&gt;next;
+        s=p-&gt;next;
+        temp=shop;
+        for(j=0;j&lt;m-1-i;j++)
+        {
+            if(strcmp(p-&gt;name,s-&gt;name)&gt;0)
+            {
+                p-&gt;next=s-&gt;next;
+                s-&gt;next=p;
+                temp-&gt;next=s;
+                t=s;
+                s=p;
+                p=t;
+            }
+            p=p-&gt;next;
+            s=s-&gt;next;
+            temp=temp-&gt;next;
+
+        }
+    }
+
+    //Save();
+
+}
+
+
+//=====================================删除店面函数========================================
+void Delete()
+{
+    int i,flag=0;
+    int n;
+    SHOP * p,* Temp=shop;
+    p=shop-&gt;next;
+    printf(&quot;\n\t请输入你要删除的店面编号:&quot;);
+    scanf(&quot;%d&quot;,&amp;n);
+    if(p==NULL)
+    {
+        printf(&quot;\n\t暂无店面信息!\n&quot;);
+    }
+    while(p)
+    {
+        if(p-&gt;num==n)
+        {
+            Temp-&gt;next=p-&gt;next;
+            free(p);
+            printf(&quot;\n\t删除成功!\n&quot;);
+            flag=1;
+            break;
+        }
+        Temp=p;
+        p=p-&gt;next;
+    }
+    if(flag==0)
+        printf(&quot;\n\t你所输入的店面号不存在\n&quot;);
+}
+
+
+//=====================================统计店面函数========================================
+void Statis()       
+{
+    int sy=0,jt=0;
+    int y1=0,y2=0,y3=0,y5=0;
+    int yes=0,no=0;
+    int i;
+    struct Shop_infor * p=shop-&gt;next;
+    do
+    {
+        if(strcmp(p-&gt;kind,&quot;私营&quot;)==0)
+        {
+            sy++;
+        }
+        if(strcmp(p-&gt;kind,&quot;集体&quot;)==0)
+        {
+            jt++;
+        }
+
+        if(strcmp(p-&gt;year,&quot;一年&quot;)==0)
+        {
+            y1++;
+        }
+        if(strcmp(p-&gt;year,&quot;两年&quot;)==0)
+        {
+            y2++;
+        }
+        if(strcmp(p-&gt;year,&quot;三年&quot;)==0)
+        {
+            y3++;
+        }
+        if(strcmp(p-&gt;year,&quot;五年&quot;)==0)
+        {
+            y5++;
+        }
+        if(strcmp(p-&gt;isent,&quot;是&quot;)==0)
+        {
+            yes++;
+        }
+        if(strcmp(p-&gt;isent,&quot;否&quot;)==0)
+        {
+            no++;
+        }
+        p=p-&gt;next;
+    }while(p!=NULL);
+
+    printf(&quot;\n\t\t\t\t\t\t\t\t店面统计结果:\n&quot;);
+    printf(&quot;\t\t\t\t\t\t\t===================================\t\t\n&quot;);            
+    printf(&quot;\t\t\t\t\t\t\t私营店面: %d        集体店面: %d\n&quot;,sy,jt);
+    printf(&quot;\t\t\t\t\t\t\t一年店面: %d        两年店面: %d\n&quot;,y1,y2);
+    printf(&quot;\t\t\t\t\t\t\t三年店面: %d        五年店面: %d\n&quot;,y3,y5);
+    printf(&quot;\t\t\t\t\t\t\t出租店面: %d        拒租店面: %d\n&quot;,yes,no);
+    printf(&quot;\t\t\t\t\t\t\t===================================\t\t\n&quot;);  
+
+}
+
+
+//=====================================出租店面函数========================================
+void Rent()
+{
+    int flag=0;
+    int num;
+    char y_n[4];
+    SHOP * p=shop-&gt;next;
+
+    do
+    {
+
+        while(true)
+        {
+            printf(&quot;\n\t请输入店面号:&quot;);
+            if(scanf(&quot;%d&quot;,&amp;num)==1)
+            {
+                break;
+            }
+            else
+            {
+                printf(&quot;\n\n\t你所输入的不是数字,请重新输入数字!\n&quot;);
+            }
+            getchar();
+            getchar();
+        }
+        while(p!=NULL)
+        {
+            if(p-&gt;num==num)
+            {
+                if(strcmp(p-&gt;isent,&quot;否&quot;)==0)
+                {
+                    flag=1;
+                    break;
+                }
+            }
+            p=p-&gt;next;
+        }
+        if(flag==1)
+        {
+            strcpy(p-&gt;isent,&quot;是&quot;);
+            printf(&quot;\n\t店面出租信息已修改,该店面现可以出租!\n&quot;);
+        }
+        else
+        {
+            printf(&quot;\n\t该店面不存在或已经被出租\n&quot;);
+        }
+        printf(&quot;\n\t是否还要继续出租店面?若继续请输入yes,退出请输入no:&quot;);    
+        scanf(&quot;%s&quot;,y_n);
+    }while(strcmp(y_n,&quot;yes&quot;)==0);
+}
+
+
+//=====================================主函数=======================================
+int main(void)
+{
+    shop-&gt;next=NULL;
+    Read();
+    menu_();
+    Save();
+    return 0;
+}
+
+
+//=====================================登录界面=======================================
+int i;
+char ch=0;
+char user[30];
+char pass1[10];
+char pass2[10];
+char f_pass[10];
+char f_user[30];
+
+
+//=====================================登录函数=======================================
+void Sign_in()
+{
+    FILE * fp;
+    int flag=0,count=1;
+    printf(&quot;\n\n\n\t\t\t\t\t\t\t*****************登陆界面******************\n\n\n&quot;);
+    while(count&lt;=3)
+    {
+        printf(&quot;\n\n\t\t\t\t\t\t\t\t请输入你的用户名:&quot;);
+        scanf(&quot;%s&quot;,user);
+        printf(&quot;\n\n\t\t\t\t\t\t\t\t请输入你的密码:&quot;);
+        i=0;
+        while((ch=getch())!=&apos;\r&apos;)
+        {
+            putchar(&apos; * &apos;);
+            pass1[i]=ch;
+            i++;
+        }
+        fp=fopen(&quot;User_Pass.txt&quot;,&quot;r&quot;);
+        if(fp==NULL)
+        {            
+            printf(&quot;\n\t\t\t\t\t\t\t\t文件打开失败!\n&quot;);
+        }
+        while(!feof(fp))
+        {
+            fscanf(fp,&quot;%s %s\n&quot;,f_user,f_pass);
+            if(strcmp(f_user,user)==0 &amp;&amp; strcmp(f_pass,pass1)==0)
             {
                 flag=1;
                 break;
             }
         }
-        p=p-&gt;next;
-    }
-    if(flag==1)
-    {
-        strcpy(p-&gt;isent,&quot;是&quot;);
-        printf(&quot;\n\t店面出租信息已修改,该店面现可以出租!\n&quot;);
-    }
-    else
-    {
-        printf(&quot;\n\t该店面不存在或已经被出租\n&quot;);
-    }
-    printf(&quot;\n\t是否还要继续出租店面?若继续请输入yes,退出请输入no:&quot;);    
-    scanf(&quot;%s&quot;,y_n);
-}while(strcmp(y_n,&quot;yes&quot;)==0);
-</code></pre><p>  }</p>
-<p>  //=====================================主函数=======================================<br>  int main(void)<br>  {<br>      shop-&gt;next=NULL;<br>      Read();<br>      menu_();<br>      Save();<br>      return 0;<br>  }</p>
-<p>  //=====================================登录界面=======================================<br>  int i;<br>  char ch=0;<br>  char user[30];<br>  char pass1[10];<br>  char pass2[10];<br>  char f_pass[10];<br>  char f_user[30];</p>
-<p>  //=====================================登录函数=======================================<br>  void Sign_in()<br>  {<br>      FILE <em> fp;<br>      int flag=0,count=1;<br>      printf(“\n\n\n\t\t\t\t\t\t\t<strong><strong><strong><em>**</em></strong></strong></strong></em>登陆界面<strong><strong><strong><strong>**</strong></strong></strong></strong>\n\n\n”);<br>      while(count&lt;=3)<br>      {<br>          printf(“\n\n\t\t\t\t\t\t\t\t请输入你的用户名:”);<br>          scanf(“%s”,user);<br>          printf(“\n\n\t\t\t\t\t\t\t\t请输入你的密码:”);<br>          i=0;<br>          while((ch=getch())!=’\r’)<br>          {<br>              putchar(‘ * ‘);<br>              pass1[i]=ch;<br>              i++;<br>          }<br>          fp=fopen(“User_Pass.txt”,”r”);<br>          if(fp==NULL)<br>          {<br>              printf(“\n\t\t\t\t\t\t\t\t文件打开失败!\n”);<br>          }<br>          while(!feof(fp))<br>          {<br>              fscanf(fp,”%s %s\n”,f_user,f_pass);<br>              if(strcmp(f_user,user)==0 &amp;&amp; strcmp(f_pass,pass1)==0)<br>              {<br>                  flag=1;<br>                  break;<br>              }<br>          }<br>          fclose(fp);<br>          if(flag==1)<br>          {<br>              printf(“\n\n\t\t\t\t\t\t\t\t   登陆成功!\n”);<br>              break;<br>          }<br>          else<br>              printf(“\n\n\t\t\t\t\t\t\t\t输入的用户名或密码错误!\n”);<br>          count++;<br>      }<br>      if(flag==0)<br>      {<br>          printf(“\n\t\t\t\t\t\t\t\t抱歉,你已不能再继续登陆!\n”);<br>      }<br>  }</p>
-<p>  //=====================================注册函数=======================================<br>  void Register()<br>  {<br>      FILE * fp;<br>      int flag=0;<br>      fp=fopen(“User.txt”,”r”);<br>      if(fp==NULL)<br>      {<br>          fp=fopen(“User.txt”,”w”);<br>          fclose(fp);<br>          fp=fopen(“User.txt”,”r”);<br>      }<br>      while(true)<br>      {<br>          printf(“\n\t\t\t\t\t\t\t\t请输入你的用户名:”);<br>          scanf(“%s”,user);<br>          while(!feof(fp))<br>          {<br>              fscanf(fp,”%s\n”,f_user);<br>              if(strcmp(f_user,user)==0)<br>              {<br>                  flag=1;<br>                  printf(“\n\t\t\t\t\t\t\t\t该用户名已存在,请重新输入!\n”);<br>              }<br>          }<br>          fclose(fp);</p>
-<pre><code>    if(flag==0)
-    {
-        fp=fopen(&quot;User.txt&quot;,&quot;a&quot;);
-        fprintf(fp,&quot;%s\n&quot;,user);
         fclose(fp);
-        while(true)
+        if(flag==1)
         {
-            printf(&quot;\n\n\t\t\t\t\t\t\t\t请输入你的密码:&quot;);
-            i=0;
-            while((ch=getch())!=&apos;\r&apos;)
+            printf(&quot;\n\n\t\t\t\t\t\t\t\t   登陆成功!\n&quot;);
+            break;
+        }
+        else
+            printf(&quot;\n\n\t\t\t\t\t\t\t\t输入的用户名或密码错误!\n&quot;);
+        count++;
+    }
+    if(flag==0)
+    {
+        printf(&quot;\n\t\t\t\t\t\t\t\t抱歉,你已不能再继续登陆!\n&quot;);
+    }
+}
+
+
+//=====================================注册函数=======================================
+void Register()
+{
+    FILE * fp;
+    int flag=0;
+    fp=fopen(&quot;User.txt&quot;,&quot;r&quot;);
+    if(fp==NULL)
+    {
+        fp=fopen(&quot;User.txt&quot;,&quot;w&quot;);
+        fclose(fp);
+        fp=fopen(&quot;User.txt&quot;,&quot;r&quot;);
+    }
+    while(true)
+    {
+        printf(&quot;\n\t\t\t\t\t\t\t\t请输入你的用户名:&quot;);
+        scanf(&quot;%s&quot;,user);
+        while(!feof(fp))
+        {
+            fscanf(fp,&quot;%s\n&quot;,f_user);
+            if(strcmp(f_user,user)==0)
             {
-                putchar(&apos; * &apos;);
-                pass1[i]=ch;
-                i++;
-            }
-            printf(&quot;\n\n\t\t\t\t\t\t\t\t请再次输入你的密码:&quot;);
-            i=0;
-            while((ch=getch())!=&apos;\r&apos;)
-            {
-                putchar(&apos; * &apos;);
-                pass2[i]=ch;
-                i++;
-            }
-            if(strcmp(pass1,pass2)!=0)
-            {
-                printf(&quot;\n\n\t\t\t\t\t\t\t密码输入不一致,请重新输入!&quot;);
-            }
-            else
-            {
-                fp=fopen(&quot;User_Pass.txt&quot;,&quot;a+&quot;);
-                fprintf(fp,&quot;%s %s\n&quot;,user,pass1);
-                fclose(fp);
-                printf(&quot;\n\n\t\t\t\t\t\t\t\t注册成功!\n&quot;);
-                break;
+                flag=1;
+                printf(&quot;\n\t\t\t\t\t\t\t\t该用户名已存在,请重新输入!\n&quot;);
             }
         }
-    }
+        fclose(fp);
 
-    if(flag==0)
-        break;     
+        if(flag==0)
+        {
+            fp=fopen(&quot;User.txt&quot;,&quot;a&quot;);
+            fprintf(fp,&quot;%s\n&quot;,user);
+            fclose(fp);
+            while(true)
+            {
+                printf(&quot;\n\n\t\t\t\t\t\t\t\t请输入你的密码:&quot;);
+                i=0;
+                while((ch=getch())!=&apos;\r&apos;)
+                {
+                    putchar(&apos; * &apos;);
+                    pass1[i]=ch;
+                    i++;
+                }
+                printf(&quot;\n\n\t\t\t\t\t\t\t\t请再次输入你的密码:&quot;);
+                i=0;
+                while((ch=getch())!=&apos;\r&apos;)
+                {
+                    putchar(&apos; * &apos;);
+                    pass2[i]=ch;
+                    i++;
+                }
+                if(strcmp(pass1,pass2)!=0)
+                {
+                    printf(&quot;\n\n\t\t\t\t\t\t\t密码输入不一致,请重新输入!&quot;);
+                }
+                else
+                {
+                    fp=fopen(&quot;User_Pass.txt&quot;,&quot;a+&quot;);
+                    fprintf(fp,&quot;%s %s\n&quot;,user,pass1);
+                    fclose(fp);
+                    printf(&quot;\n\n\t\t\t\t\t\t\t\t注册成功!\n&quot;);
+                    break;
+                }
+            }
+        }
+
+        if(flag==0)
+            break;     
+    }
 }
-</code></pre><p>  }</p>
-<p>  //=====================================登录菜单=======================================<br>  void menu_()<br>  {<br>      int choice;<br>      do<br>      {<br>          printf(“\n\n\n\n\n”);<br>          printf(“\n\t\t\t\t\t\t\t   <strong><strong><strong><strong><strong><strong><strong><strong><strong>*</strong></strong></strong></strong></strong></strong></strong></strong></strong>\n”);<br>          printf(“\n\t\t\t\t\t\t\t\t欢迎来到店面管理系统登陆界面!\n”);<br>          printf(“\n\t\t\t\t\t\t\t\t\t   用户登录\n”);<br>          printf(“\n\t\t\t\t\t\t\t\t\t   用户注册\n”);<br>          printf(“\n\t\t\t\t\t\t\t\t\t    退出\n”);<br>          printf(“\n\t\t\t\t\t\t\t   <strong><strong><strong><strong><strong><strong><strong><strong><strong>*</strong></strong></strong></strong></strong></strong></strong></strong></strong>“);<br>          printf(“\n\n\t\t\t\t\t\t\t  请输入你的选项(1.登录 2.注册 0.退出):”);<br>          scanf(“%d”,&amp;choice);<br>          switch(choice)<br>          {<br>              case 1:Sign_in();menu();break;<br>              case 2:Register();break;<br>              case 0:break;<br>          }<br>      }while(choice!=0);<br>  }</p>
-<h2 id="涉及的C语言知识"><a href="#涉及的C语言知识" class="headerlink" title="涉及的C语言知识:"></a>涉及的C语言知识:</h2><p><strong>链表的创建，插入，删除，排序，结构体，指针，函数，文件，字符数组</strong></p>
-<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题:"></a>遇到的问题:</h2><p>**1. 虽然已经学习了链表和文件，但真正实践时，却发现自己很难将文件与指针巧妙的联系起来，最终借鉴别人的代码，才掌握了如何运用链表与文件。</p>
-<ol start="2">
-<li>管理系统的代码比较长，所以我经常犯一些低级错误，如忘记声明变量，打错关键字等等，所以写代码时一定要认真，细心。<br>管理系统的排序问题，困惑了我很久，总是觉得自己的代码无误，而在运行时总是出现故障。最终发现问题的根源是对指针的不太熟练，而指针是C语言的重要部分，必须要做到对指针的熟练掌握，这会使我们事半功倍。</li>
-<li>在开始的密码的设置中，我并没有意识到对密码进行不可见设置，导致管理系统的登录界面看起来很不美观，而修改了之后，管理系统更加精致。**</li>
+
+
+//=====================================登录菜单=======================================
+void menu_()
+{
+    int choice;
+    do
+    {
+        printf(&quot;\n\n\n\n\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t   *************************************\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t\t欢迎来到店面管理系统登陆界面!\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t\t\t   用户登录\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t\t\t   用户注册\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t\t\t    退出\n&quot;);
+        printf(&quot;\n\t\t\t\t\t\t\t   *************************************&quot;);
+        printf(&quot;\n\n\t\t\t\t\t\t\t  请输入你的选项(1.登录 2.注册 0.退出):&quot;);
+        scanf(&quot;%d&quot;,&amp;choice);
+        switch(choice)
+        {
+            case 1:Sign_in();menu();break;
+            case 2:Register();break;
+            case 0:break;
+        }
+    }while(choice!=0);
+}
+</code></pre><h2 id="涉及的C语言知识"><a href="#涉及的C语言知识" class="headerlink" title="涉及的C语言知识:"></a>涉及的C语言知识:</h2><p><strong>链表的创建，插入，删除，排序，结构体，指针，函数，文件，字符数组</strong></p>
+<h2 id="管理系统的功能"><a href="#管理系统的功能" class="headerlink" title="管理系统的功能:"></a>管理系统的功能:</h2><ol>
+<li>加店面信息</li>
+<li>浏览店面信息</li>
+<li>修改店面信息</li>
+<li>删除店面信息</li>
+<li>查找店面信息</li>
+<li>统计店面数量</li>
+<li>出租店面</li>
+<li>插入店面信息</li>
+<li>注册登录  <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题:"></a>遇到的问题:</h2></li>
+<li>虽然已经学习了链表和文件，但真正实践时，却发现自己很难将文件与指针巧妙的联系起来，最终借鉴别人的代码，才掌握了如何运用链表与文件.  </li>
+<li>管理系统的代码比较长，所以我经常犯一些低级错误，如忘记声明变量，打错关键字等等，所以写代码时一定要认真，细心。<br>管理系统的排序问题，困惑了我很久，总是觉得自己的代码无误，而在运行时总是出现故障。最终发现问题的根源是对指针的不太熟练，而指针是C语言的重要部分，必须要做到对指针的熟练掌握，这会使我们事半功倍.  </li>
+<li>在开始的密码的设置中，我并没有意识到对密码进行不可见设置，导致管理系统的登录界面看起来很不美观，而修改了之后，管理系统更加精致.  <h2 id="做完管理系统的感想"><a href="#做完管理系统的感想" class="headerlink" title="做完管理系统的感想:"></a>做完管理系统的感想:</h2><strong>完成这次管理系统的任务，使我受益颇深。在做管理系统之前，我是对自己有些质疑的，甚至不知道管理系统是什么？但在查找资料解决问题的过程中，我慢慢地学习到了更多的知识去解决问题，也学会怎样使自己静下心来。在这期间，我有过烦躁，甚至有过不想做下去的冲动，但最终还是坚持下来，当看到自己的管理系统能够正常的运行时，以前的那些不快也烟消云散了。所以说，学习的痛苦只是一时的，没有学到的才是一世的痛苦。所以说，代码还是要认真写。</strong></li>
 </ol>
-<h2 id="做完管理系统的感想"><a href="#做完管理系统的感想" class="headerlink" title="做完管理系统的感想:"></a>做完管理系统的感想:</h2><p><strong>完成这次管理系统的任务，使我受益颇深。在做管理系统之前，我是对自己有些质疑的，甚至不知道管理系统是什么？但在查找资料解决问题的过程中，我慢慢地学习到了更多的知识去解决问题，也学会怎样使自己静下心来。在这期间，我有过烦躁，甚至有过不想做下去的冲动，但最终还是坚持下来，当看到自己的管理系统能够正常的运行时，以前的那些不快也烟消云散了。所以说，学习的痛苦只是一时的，没有学到的才是一世的痛苦。所以说，代码还是要认真写。</strong></p>
 
       
     </div>
