@@ -88,7 +88,7 @@
 <p><strong>对于找假币问题，我在这里来总结了两种方法，希望能给大家参考。</strong></p>
 <p><strong><em>二分法VS三分法</em></strong></p>
 <h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><p><strong>二分法是我们经常使用的方法，它的优点就在于直观，清晰</strong></p>
-<p><strong>以下是二分法的代码实现：</strong><br>‘’’</p>
+<p><strong>以下是二分法的代码实现：</strong></p>
 <pre><code>#include &lt;stdio.h&gt;
 #define LENGTH 16 //表示假币的数量，可以在范围内任意修改
 #define FALSE -1
@@ -141,11 +141,118 @@ int main(void)
   search(coin,0,LENGTH);
   return 0;
 }
-</code></pre><p>‘’’</p>
-<h3 id="疑难解答"><a href="#疑难解答" class="headerlink" title="疑难解答"></a>疑难解答</h3><h2 id="主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置"><a href="#主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置" class="headerlink" title="主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置;"></a><strong>主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置;</strong></h2><h2 id="三分法"><a href="#三分法" class="headerlink" title="三分法"></a>三分法</h2><p><strong>三分法是在二分法的基础上拓展出来的，因为二分法虽然直观，清晰，但同时，它没有最大限度地进行对时间的优化，故此三分法进行优化</strong><br><strong>以下是三分法的代码实现：</strong><br>‘’’</p>
-<p>  #include &lt;stdio.h&gt;</p>
-<p>  #define N 50<br>  void search(int data[],int count,int start);//将硬币分三组进行比较<br>  void search(int data[],int count,int start)//count表示判断的硬币个数，start表示这组硬币的起始位置<br>  {<br>    int a,b,i;<br>    double sum1=0,sum2=0;<br>    a=count/3;<br>    b=count%3;<br>    if(count==1)//硬币个数为1，直接判断<br>    {<br>      printf(“\n假币是第%d个.”,start);return;<br>    }<br>    if(count==2)//硬币个数为2，判断一次<br>    {<br>      if(data[start]&gt;data[start+1])<br>      {<br>        printf(“\n假币是第%d个.”,start+1);return;<br>      }<br>      else<br>      {<br>        printf(“\n假币是第%d个.”,start);return;<br>      }<br>    }<br>    if(count==3)//硬币个数为3，判断一次<br>    {<br>      if(data[start]==data[start+1])<br>      {<br>        printf(“\n假币是第%d个.”,start+2);return;<br>      }<br>      else if(data[start]&lt;data[start+1])<br>      {<br>        printf(“\n假币是第%d个.”,start);return;<br>      }<br>      else<br>      {<br>        printf(“\n假币是第%d个.”,start+1);return;<br>      }<br>    }<br>    if(b==0)//余数为 0，任取两组硬币进行比较(此处选取第一，二组进行比较)<br>    {<br>      for(i=0;i&lt;a;i++)<br>      {<br>        sum1+=data[start+i];<br>        sum2+=data[start+i+a];<br>      }<br>      if(sum1==sum2)//sum1与sum2相等，故假币在第三组，调用search()继续进行判断<br>      {<br>        search(data,a,start+2<em>a);return;<br>      }<br>      else if(sum1&lt;sum2)//sum1&lt;sum2，故假币在第一组，调用search()继续进行判断<br>      {<br>        search(data,a,start);return;<br>      }<br>      else  //sum1&gt;sum2，假币在第二组，调用search()继续进行判断<br>      {<br>        search(data,a,start+a);return;<br>      }<br>    }<br>    if(b==1)  //b表示硬币个数除以 3的余数，若 b为 1，则将余数 1加到第一组，保证第二组和第三组的硬币个数相同<br>    {<br>      for(i=a+1;i&lt;2</em>a+1;i++)<br>      {<br>        sum1+=data[start+i];<br>        sum2+=data[start+i+a];<br>      }<br>      if(sum1==sum2)<br>      {<br>        search(data,a+1,start);return;<br>      }<br>      else if(sum1&lt;sum2)<br>      {<br>        search(data,a,start+a+1);return;<br>      }<br>      else<br>      {<br>        search(data,a,start+2<em>a+1);return;<br>      }<br>    }<br>    if(b==2)//b表示硬币个数除以 3的余数,若 b为 2,则将余数 2分成1+1,分别加到第一,二组,保证第一组和第二组的硬币个数相同<br>    {<br>      for(i=0;i&lt;=a;i++)<br>      {<br>        sum1+=data[start+i];<br>        sum2+=data[start+i+a+1];<br>      }<br>      if(sum1==sum2)<br>      {<br>        search(data,a,start+2</em>a+2);return;<br>      }<br>      else if(sum1&lt;sum2)<br>      {<br>        search(data,a+1,start);return;<br>      }<br>      else<br>      {<br>        search(data,a+1,start+a+1);return;<br>      }<br>    }<br>  }<br>  int main(void)<br>  {<br>    int place;<br>    int coin[N]={0};<br>    printf(“请输入你想让假币所在的位置:”);<br>    scanf(“%d”,&amp;place);<br>    coin[place%N]=-1;//假币为-1<br>    search(coin,N,0);//调用search函数<br>    return 0;<br>  }<br>‘’’</p>
-<h3 id="疑难解答-1"><a href="#疑难解答-1" class="headerlink" title="疑难解答"></a>疑难解答</h3><p><strong>三分法主要在于将数组表示的假币分成三份，减少了时间复杂度，但其的判断条件也就将复杂，我们直到当硬币数量为1时，必定是假币，当硬币数量为2时，只需比较一次，当硬币数量为3时，也只需比较一次，便可得到结果：故整体思路就是将硬币3分，调用3分函数，直至可以得到结果</strong></p>
+</code></pre><h3 id="疑难解答"><a href="#疑难解答" class="headerlink" title="疑难解答"></a>疑难解答</h3><h2 id="主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置"><a href="#主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置" class="headerlink" title="主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置;"></a><strong>主要是对数组的起始位置的寻找，若起始位置寻找错误，则假币的寻找必然错误，所以，在此许定义一个变量跟踪数组的起始位置;</strong></h2><h2 id="三分法"><a href="#三分法" class="headerlink" title="三分法"></a>三分法</h2><p><strong>三分法是在二分法的基础上拓展出来的，因为二分法虽然直观，清晰，但同时，它没有最大限度地进行对时间的优化，故此三分法进行优化</strong><br><strong>以下是三分法的代码实现：</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+#define N 50
+void search(int data[],int count,int start);//将硬币分三组进行比较
+void search(int data[],int count,int start)//count表示判断的硬币个数，start表示这组硬币的起始位置
+{
+  int a,b,i;
+  double sum1=0,sum2=0;
+  a=count/3;
+  b=count%3;
+  if(count==1)//硬币个数为1，直接判断
+  {
+    printf(&quot;\n假币是第%d个.&quot;,start);return;
+  }
+  if(count==2)//硬币个数为2，判断一次
+  {
+    if(data[start]&gt;data[start+1])
+    {
+      printf(&quot;\n假币是第%d个.&quot;,start+1);return;
+    }
+    else
+    {
+      printf(&quot;\n假币是第%d个.&quot;,start);return;
+    }
+  }
+  if(count==3)//硬币个数为3，判断一次
+  {
+    if(data[start]==data[start+1])
+    {
+      printf(&quot;\n假币是第%d个.&quot;,start+2);return;
+    }
+    else if(data[start]&lt;data[start+1])
+    {
+      printf(&quot;\n假币是第%d个.&quot;,start);return;
+    }
+    else
+    {
+      printf(&quot;\n假币是第%d个.&quot;,start+1);return;
+    }
+  }
+  if(b==0)//余数为 0，任取两组硬币进行比较(此处选取第一，二组进行比较)
+  {
+    for(i=0;i&lt;a;i++)
+    {
+      sum1+=data[start+i];
+      sum2+=data[start+i+a];
+    }
+    if(sum1==sum2)//sum1与sum2相等，故假币在第三组，调用search()继续进行判断
+    {
+      search(data,a,start+2*a);return;
+    }
+    else if(sum1&lt;sum2)//sum1&lt;sum2，故假币在第一组，调用search()继续进行判断  
+    {
+      search(data,a,start);return;
+    }
+    else  //sum1&gt;sum2，假币在第二组，调用search()继续进行判断  
+    {
+      search(data,a,start+a);return;
+    }
+  }
+  if(b==1)  //b表示硬币个数除以 3的余数，若 b为 1，则将余数 1加到第一组，保证第二组和第三组的硬币个数相同
+  {
+    for(i=a+1;i&lt;2*a+1;i++)
+    {
+      sum1+=data[start+i];
+      sum2+=data[start+i+a];
+    }
+    if(sum1==sum2)
+    {
+      search(data,a+1,start);return;
+    }
+    else if(sum1&lt;sum2)
+    {
+      search(data,a,start+a+1);return;
+    }
+    else
+    {
+      search(data,a,start+2*a+1);return;
+    }
+  }
+  if(b==2)//b表示硬币个数除以 3的余数,若 b为 2,则将余数 2分成1+1,分别加到第一,二组,保证第一组和第二组的硬币个数相同
+  {
+    for(i=0;i&lt;=a;i++)
+    {
+      sum1+=data[start+i];
+      sum2+=data[start+i+a+1];
+    }
+    if(sum1==sum2)
+    {
+      search(data,a,start+2*a+2);return;
+    }
+    else if(sum1&lt;sum2)
+    {
+      search(data,a+1,start);return;
+    }
+    else
+    {
+      search(data,a+1,start+a+1);return;
+    }
+  }
+}
+int main(void)
+{
+  int place;
+  int coin[N]={0};
+  printf(&quot;请输入你想让假币所在的位置:&quot;);
+  scanf(&quot;%d&quot;,&amp;place);
+  coin[place%N]=-1;//假币为-1
+  search(coin,N,0);//调用search函数
+  return 0;
+}
+</code></pre><h3 id="疑难解答-1"><a href="#疑难解答-1" class="headerlink" title="疑难解答"></a>疑难解答</h3><p><strong>三分法主要在于将数组表示的假币分成三份，减少了时间复杂度，但其的判断条件也就将复杂，我们直到当硬币数量为1时，必定是假币，当硬币数量为2时，只需比较一次，当硬币数量为3时，也只需比较一次，便可得到结果：故整体思路就是将硬币3分，调用3分函数，直至可以得到结果</strong></p>
 <p><strong><em>以上便是此次分享的全部内容！Fighting！</em></strong></p>
 
       
