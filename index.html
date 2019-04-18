@@ -86,9 +86,8 @@
       
         <p><strong><em>本次分享的问题为有序链表的合并问题</em></strong><br><strong>问题:将两个有序链表合并为一个新的有序链表并返回，新链表是通过拼接给定的两个链表的所有节点组成的</strong></p>
 <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析:"></a>问题分析:</h2><p><em>可能大多数人对于链表有种排斥的感觉，总觉得链表很棘手。实则，有序链表的合并，类似于有序数组的合并问题，两者的差异仅在于链表多了指针的运用，所以我们可以以有序数组合并的方式考虑有序链表的合并问题，使问题简单化。
-</em>两个有序链表的顺序有四种情况:<br><em>1.两个链表均为正序，即由小到大排列;
-</em>2.两个链表均为逆序，即由大到小排列;<br><em>3.第一个链表由小到大，第二个链表由大到小;
-</em>4.第一个链表由大到小，第二个链表由小到大;<br><em>因此，我们在写链表的排序时，要考虑这四种情况</em></p>
+</em>两个有序链表的顺序有四种情况:<em><br>1.两个链表均为正序，即由小到大排列<br>2.两个链表均为逆序，即由大到小排列<br>3.第一个链表由小到大，第二个链表由大到小<br>4.第一个链表由大到小，第二个链表由小到大
+</em>因此，我们在写链表的排序时，要考虑这四种情况*</p>
 <h2 id="代码如下"><a href="#代码如下" class="headerlink" title="代码如下:"></a>代码如下:</h2><pre><code>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 struct data* addNode(struct data* phead);
@@ -99,14 +98,110 @@ struct data{
     int num;
     struct data* next;
 };
-</code></pre><p><em>此函数块为创建链表函数</em><br>      struct data<em> addNode(struct data</em> phead)//创建链表函数<br>      {<br>          char ch;<br>          struct data<em> ptemp=phead;<br>          do<br>          {<br>              struct data</em> add=(struct data<em>)malloc(sizeof(struct data));//malloc()函数，添加新节点<br>              printf(“\n请输入一个数字:”);<br>              scanf(“%d”,&amp;add-&gt;num);<br>              ptemp-&gt;next=add;//ptemp表示临时指针，指向下一个节点<br>              ptemp=add;//并让ptemp一直跟踪尾节点<br>              printf(“\n是否要继续添加新节点(Y/N):”);<br>              fflush(stdin);<br>              ch=getchar();<br>          }while(ch==’Y’);<br>          ptemp-&gt;next=NULL;<br>          return phead;<br>      }
-</em>此函数块实现的功能为判断链表的有序性的具体情况<em><br>      int Judge(struct data</em> head1,struct data<em> head2)<br>      {<br>          int flag1=0,flag2=0;<br>          struct data</em> temp1=head1-&gt;next;<br>          struct data<em> temp2=head2-&gt;next;<br>          struct data</em> next1=temp1-&gt;next;<br>          struct data<em> next2=temp2-&gt;next;<br>          while(next1)<br>          {<br>              if(temp1-&gt;num &lt; next1-&gt;num)<br>              {<br>                  flag1=1;//表示链表的数据由小到大排列<br>                  break;<br>              }<br>              else if(temp1-&gt;num &gt; next1-&gt;num)<br>              {<br>                  flag1=2;//表示链表的数据由大到小排列<br>                  printf(“flag1=2\n”);<br>                  break;<br>              }<br>              else;<br>              temp1=temp1-&gt;next;<br>              next1=next1-&gt;next;<br>          }<br>          while(next2)<br>          {<br>              if(temp2-&gt;num &lt; next2-&gt;num)<br>              {<br>                  flag2=1;//表示链表的数据由小到大排列<br>                  break;<br>              }<br>              else if(temp2-&gt;num &gt; next2-&gt;num)<br>              {<br>                  flag2=2;//表示链表的数据由大到小排列<br>                  printf(“flag2=2\n”);<br>                  break;<br>              }<br>              else;<br>              temp2=temp2-&gt;next;<br>              next2=next2-&gt;next;<br>          }<br>          if(flag1==1 &amp;&amp; flag2==1)<br>              return 1;//表示两个链表的数据均由小到大排列<br>          else if(flag1==2 &amp;&amp; flag2==2)<br>              return 2;//表示两个链表的数据均由大到小排列<br>          else if(flag1==1 &amp;&amp; flag2==2)<br>          {<br>              return 3;//表示第一个链表是由小到大，第二个链表是由大到小<br>          }<br>          else<br>          {<br>              return 4;//表示第一个链表是由大到小，第二个链表是由小到大<br>          }<br>      }
-</em>此函数块实现的功能时对两个不同向有序的链表转换成同向有序链表<em><br>      struct data</em> nixu(struct data<em> head)<br>      {<br>          struct data</em> temp=head-&gt;next;<br>          struct data<em> p=temp-&gt;next;<br>          struct data</em> s;<br>          temp-&gt;next=NULL;<br>          if(p==NULL)<br>              return head;<br>          while(p)<br>          {<br>              s=p-&gt;next;<br>              p-&gt;next=temp;<br>              temp=p;<br>              p=s;</p>
-<pre><code>    }
+</code></pre><p><em>此函数块为创建链表函数</em></p>
+<pre><code>struct data* addNode(struct data* phead)//创建链表函数
+{
+    char ch;
+    struct data* ptemp=phead;
+    do
+    {
+        struct data* add=(struct data*)malloc(sizeof(struct data));//malloc()函数，添加新节点
+        printf(&quot;\n请输入一个数字:&quot;);
+        scanf(&quot;%d&quot;,&amp;add-&gt;num);
+        ptemp-&gt;next=add;//ptemp表示临时指针，指向下一个节点
+        ptemp=add;//并让ptemp一直跟踪尾节点
+        printf(&quot;\n是否要继续添加新节点(Y/N):&quot;);
+        fflush(stdin);
+        ch=getchar();
+    }while(ch==&apos;Y&apos;);
+    ptemp-&gt;next=NULL;
+    return phead;
+}
+</code></pre><p><em>此函数块实现的功能为判断链表的有序性的具体情况</em></p>
+<pre><code>int Judge(struct data* head1,struct data* head2)
+{
+    int flag1=0,flag2=0;
+    struct data* temp1=head1-&gt;next;
+    struct data* temp2=head2-&gt;next;
+    struct data* next1=temp1-&gt;next;
+    struct data* next2=temp2-&gt;next;
+    while(next1)
+    {
+        if(temp1-&gt;num &lt; next1-&gt;num)
+        {
+            flag1=1;//表示链表的数据由小到大排列
+            break;
+        }  
+        else if(temp1-&gt;num &gt; next1-&gt;num)
+        {
+            flag1=2;//表示链表的数据由大到小排列
+            printf(&quot;flag1=2\n&quot;);
+            break;
+        }
+        else;
+        temp1=temp1-&gt;next;
+        next1=next1-&gt;next;
+    }
+    while(next2)
+    {
+        if(temp2-&gt;num &lt; next2-&gt;num)
+        {
+            flag2=1;//表示链表的数据由小到大排列
+            break;
+        }  
+        else if(temp2-&gt;num &gt; next2-&gt;num)
+        {
+            flag2=2;//表示链表的数据由大到小排列
+            printf(&quot;flag2=2\n&quot;);
+            break;
+        }
+        else;
+        temp2=temp2-&gt;next;
+        next2=next2-&gt;next;
+    }
+    if(flag1==1 &amp;&amp; flag2==1)
+        return 1;//表示两个链表的数据均由小到大排列
+    else if(flag1==2 &amp;&amp; flag2==2)
+        return 2;//表示两个链表的数据均由大到小排列
+    else if(flag1==1 &amp;&amp; flag2==2)
+    {
+        return 3;//表示第一个链表是由小到大，第二个链表是由大到小
+    }
+    else
+    {
+        return 4;//表示第一个链表是由大到小，第二个链表是由小到大  
+    }
+}
+</code></pre><p><em>此函数块实现的功能时对两个不同向有序的链表转换成同向有序链表</em></p>
+<pre><code>struct data* nixu(struct data* head)
+{
+    struct data* temp=head-&gt;next;
+    struct data* p=temp-&gt;next;
+    struct data* s;
+    temp-&gt;next=NULL;
+    if(p==NULL)
+        return head;
+    while(p)
+    {
+        s=p-&gt;next;
+        p-&gt;next=temp;
+        temp=p;
+        p=s;
+
+    }
     return temp;
 }
-</code></pre><p><em>此函数块实现的功能是将两链表连接成一个有序链表</em><br>      struct data<em> sort(struct data</em> head1,struct data<em> head2)//合并链表函数，两个参数表示要拼接的链表头指针<br>      {<br>          struct data</em> temp1=head1-&gt;next;<br>          struct data<em> temp2=head2-&gt;next;<br>          struct data</em> newNext;<br>          struct data<em> newLink=(struct data</em>)malloc(sizeof(struct data));//新链表<br>          newLink-&gt;next=NULL;<br>          newNext=newLink;</p>
-<pre><code>    if(Judge(head1,head2)==2)
+</code></pre><p><em>此函数块实现的功能是将两链表连接成一个有序链表</em></p>
+<pre><code>struct data* sort(struct data* head1,struct data* head2)//合并链表函数，两个参数表示要拼接的链表头指针
+{
+    struct data* temp1=head1-&gt;next;
+    struct data* temp2=head2-&gt;next;
+    struct data* newNext;
+    struct data* newLink=(struct data*)malloc(sizeof(struct data));//新链表
+    newLink-&gt;next=NULL;
+    newNext=newLink;
+
+    if(Judge(head1,head2)==2)
     {
         while(1)
         {
@@ -175,7 +270,29 @@ struct data{
         return newLink;
     }
 }
-</code></pre><p><em>主函数部分如下:</em><br>      int main(void)<br>      {<br>          char ch;<br>          struct data<em> temp=NULL;<br>          struct data</em> head1=(struct data<em>)malloc(sizeof(struct data));<br>          struct data</em> head2=(struct data*)malloc(sizeof(struct data));<br>          head1-&gt;next=NULL;<br>          head2-&gt;next=NULL;<br>          printf(“创建第一个链表:\n”);<br>          addNode(head1);<br>          printf(“\n创建第二个链表:\n”);<br>          addNode(head2);<br>          head1=sort(head1,head2);<br>          temp=head1-&gt;next;<br>          while(temp!=NULL)<br>          {<br>              printf(“%d\t”,temp-&gt;num);<br>              temp=temp-&gt;next;<br>          }<br>          return 0;<br>      }<br><strong>本次分享完满结束啦!</strong></p>
+</code></pre><p><em>主函数部分如下:</em></p>
+<pre><code>int main(void)
+{
+    char ch;
+    struct data* temp=NULL;
+    struct data* head1=(struct data*)malloc(sizeof(struct data));
+    struct data* head2=(struct data*)malloc(sizeof(struct data));
+    head1-&gt;next=NULL;
+    head2-&gt;next=NULL;
+    printf(&quot;创建第一个链表:\n&quot;);
+    addNode(head1);
+    printf(&quot;\n创建第二个链表:\n&quot;);
+    addNode(head2);
+    head1=sort(head1,head2);
+    temp=head1-&gt;next;
+    while(temp!=NULL)
+    {
+        printf(&quot;%d\t&quot;,temp-&gt;num);
+        temp=temp-&gt;next;
+    }
+    return 0;
+}
+</code></pre><p><strong>本次分享完满结束啦!</strong></p>
 
       
     </div>
