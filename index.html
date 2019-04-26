@@ -62,6 +62,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-经典问题之最长公共前缀" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/经典问题之最长公共前缀/" class="article-date">
+  <time datetime="2019-04-26T13:48:37.000Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/26/经典问题之最长公共前缀/">经典问题之最长公共前缀</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong><em>本次来探讨字符串数组的最长公共前缀问题</em></strong></p>
+<h2 id="问题简介："><a href="#问题简介：" class="headerlink" title="问题简介："></a>问题简介：</h2><p><strong>编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回””。</strong></p>
+<h2 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h2><p>1.需要建立一个二维字符串数组，将多个字符串保存起来；此处需要注意，输入字符串数组时,使用的是一层循环<br>2.由于最长公共前缀的长度不超过最短的字符串，因此，可以找到最短的字符串，减少循环的次数<br>3.将字符串数组的第一个和第二个字符串的首元素进行比较，若相等，继续进行第一个字符串和第三个字符串的首元素的比较，若相等，继续进行接下来的比较，若不相等，结束比较<br>4.若第一个元素是公共的元素，则将它保存在一个新的一维字符数组中，按照第二步的方法继续进行比较下一个元素，直至有不相同的元素出现，结束比较<br>5.输出最长公共前缀</p>
+<h2 id="代码实现如下："><a href="#代码实现如下：" class="headerlink" title="代码实现如下："></a>代码实现如下：</h2><p><strong>以下的功能实现寻找公共前缀：</strong></p>
+<pre><code>void Search(char A[][N])
+{
+    char B[N];
+    int i,j,k,min=0,flag=1;
+    min=strlen(A[0]);    //min表示字符数组中最短的字符串长度
+    for(i=1;i&lt;M;i++)
+    {
+        if(strlen(A[i])&lt;min)
+            min=strlen(A[i]);
+    }
+    for(i=0;i&lt;min;i++)
+    {
+        j=0;k=1;flag=1;
+        while(k&lt;M)
+        {
+            if(A[j][i]!=A[k][i])//若第一个数组与第二个数组的首元素不一致，则直接不用再进行比较，flag作为标识
+            {
+                flag=0;break;
+            }
+            else    k++;
+        }
+        if(flag)
+            B[i]=A[0][i];//将相等元素存入字符数组B中
+        else    break;
+    }
+    B[i]=&apos;\0&apos;;//末尾应手动加上字符结束标志&apos;\0&apos;
+    printf(&quot;最长公共前缀：\&quot;%s\&quot;&quot;,B);
+}
+</code></pre><p><strong>以下是主函数的代码：</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#define M 4
+#define N 20
+void Search(char A[][N]);
+int main(void)
+{
+    int i;
+    char A[M][N];
+    printf(&quot;请输入字符串数组:\n&quot;);
+    for(i=0;i&lt;M;i++)    //输入N组字符串(gets()参数为数组名，即数组的首元素地址)
+        gets(A[i]);
+    Search(A);
+    return 0;
+}
+</code></pre><h1 id="运用的知识："><a href="#运用的知识：" class="headerlink" title="运用的知识："></a>运用的知识：</h1><p>1.字符数组的使用<br>2.以字符数组名为函数参数的使用</p>
+<p><strong><em>此次分享到此结束！！！</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/26/经典问题之最长公共前缀/" data-id="cjuy619e50004pcv9c4kgte82" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-经典问题之爬楼梯" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/26/经典问题之爬楼梯/" class="article-date">
@@ -111,7 +197,7 @@ int main(void)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/经典问题之爬楼梯/" data-id="cjuy4h1d80002fkv9w7o1fnml" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/26/经典问题之爬楼梯/" data-id="cjuy619e60005pcv96509gs92" class="article-share-link">Share</a>
       
       
     </footer>
@@ -356,7 +442,7 @@ struct data{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/18/有序链表的合并/" data-id="cjuy4h1d00000fkv9itzbytag" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/18/有序链表的合并/" data-id="cjuy619e00001pcv97odf2l7f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -562,7 +648,7 @@ int main(void)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/13/经典问题之找假币/" data-id="cjuy4h1d60001fkv9ewnmnphn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/13/经典问题之找假币/" data-id="cjuy619e20002pcv92l5z5fwb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1923,7 +2009,7 @@ void menu_()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/11/店面管理系统/" data-id="cjuy4h1dt0005fkv9tsnif2fq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/11/店面管理系统/" data-id="cjuy619eo0006pcv9fc2sy1el" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1968,7 +2054,7 @@ void menu_()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/hello-world/" data-id="cjuy4h1da0003fkv9vckep0wc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/11/hello-world/" data-id="cjuy619du0000pcv9595gvein" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2008,7 +2094,7 @@ void menu_()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/04/第一次搭建博客时遇到的问题/" data-id="cjuy4h1db0004fkv918r44xgo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/04/第一次搭建博客时遇到的问题/" data-id="cjuy619e40003pcv9hc5zoszi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -2049,6 +2135,10 @@ void menu_()
       <ul>
         
           <li>
+            <a href="/2019/04/26/经典问题之最长公共前缀/">经典问题之最长公共前缀</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/26/经典问题之爬楼梯/">经典问题之爬楼梯</a>
           </li>
         
@@ -2062,10 +2152,6 @@ void menu_()
         
           <li>
             <a href="/2019/03/11/店面管理系统/">店面管理系统</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/11/hello-world/">Hello World</a>
           </li>
         
       </ul>

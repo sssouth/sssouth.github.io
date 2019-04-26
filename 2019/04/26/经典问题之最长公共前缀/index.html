@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>经典问题之最长公共前缀 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本次来探讨字符串数组的最长公共前缀问题 问题简介：编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回””。 问题分析：1.需要建立一个二维字符串数组，将多个字符串保存起来；此处需要注意，输入字符串数组时,使用的是一层循环2.由于最长公共前缀的长度不超过最短的字符串，因此，可以找到最短的字符串，减少循环的次数3.将字符串数组的第一个和第二个字符串的首元素进行比较，若相等，继续进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典问题之最长公共前缀">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/经典问题之最长公共前缀/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本次来探讨字符串数组的最长公共前缀问题 问题简介：编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回””。 问题分析：1.需要建立一个二维字符串数组，将多个字符串保存起来；此处需要注意，输入字符串数组时,使用的是一层循环2.由于最长公共前缀的长度不超过最短的字符串，因此，可以找到最短的字符串，减少循环的次数3.将字符串数组的第一个和第二个字符串的首元素进行比较，若相等，继续进行">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-26T14:22:45.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典问题之最长公共前缀">
+<meta name="twitter:description" content="本次来探讨字符串数组的最长公共前缀问题 问题简介：编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回””。 问题分析：1.需要建立一个二维字符串数组，将多个字符串保存起来；此处需要注意，输入字符串数组时,使用的是一层循环2.由于最长公共前缀的长度不超过最短的字符串，因此，可以找到最短的字符串，减少循环的次数3.将字符串数组的第一个和第二个字符串的首元素进行比较，若相等，继续进行">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-经典问题之最长公共前缀" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/经典问题之最长公共前缀/" class="article-date">
+  <time datetime="2019-04-26T13:48:37.000Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      经典问题之最长公共前缀
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong><em>本次来探讨字符串数组的最长公共前缀问题</em></strong></p>
+<h2 id="问题简介："><a href="#问题简介：" class="headerlink" title="问题简介："></a>问题简介：</h2><p><strong>编写一个函数来查找字符串数组中的最长公共前缀，如果不存在公共前缀，返回””。</strong></p>
+<h2 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h2><p>1.需要建立一个二维字符串数组，将多个字符串保存起来；此处需要注意，输入字符串数组时,使用的是一层循环<br>2.由于最长公共前缀的长度不超过最短的字符串，因此，可以找到最短的字符串，减少循环的次数<br>3.将字符串数组的第一个和第二个字符串的首元素进行比较，若相等，继续进行第一个字符串和第三个字符串的首元素的比较，若相等，继续进行接下来的比较，若不相等，结束比较<br>4.若第一个元素是公共的元素，则将它保存在一个新的一维字符数组中，按照第二步的方法继续进行比较下一个元素，直至有不相同的元素出现，结束比较<br>5.输出最长公共前缀</p>
+<h2 id="代码实现如下："><a href="#代码实现如下：" class="headerlink" title="代码实现如下："></a>代码实现如下：</h2><p><strong>以下的功能实现寻找公共前缀：</strong></p>
+<pre><code>void Search(char A[][N])
+{
+    char B[N];
+    int i,j,k,min=0,flag=1;
+    min=strlen(A[0]);    //min表示字符数组中最短的字符串长度
+    for(i=1;i&lt;M;i++)
+    {
+        if(strlen(A[i])&lt;min)
+            min=strlen(A[i]);
+    }
+    for(i=0;i&lt;min;i++)
+    {
+        j=0;k=1;flag=1;
+        while(k&lt;M)
+        {
+            if(A[j][i]!=A[k][i])//若第一个数组与第二个数组的首元素不一致，则直接不用再进行比较，flag作为标识
+            {
+                flag=0;break;
+            }
+            else    k++;
+        }
+        if(flag)
+            B[i]=A[0][i];//将相等元素存入字符数组B中
+        else    break;
+    }
+    B[i]=&apos;\0&apos;;//末尾应手动加上字符结束标志&apos;\0&apos;
+    printf(&quot;最长公共前缀：\&quot;%s\&quot;&quot;,B);
+}
+</code></pre><p><strong>以下是主函数的代码：</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#define M 4
+#define N 20
+void Search(char A[][N]);
+int main(void)
+{
+    int i;
+    char A[M][N];
+    printf(&quot;请输入字符串数组:\n&quot;);
+    for(i=0;i&lt;M;i++)    //输入N组字符串(gets()参数为数组名，即数组的首元素地址)
+        gets(A[i]);
+    Search(A);
+    return 0;
+}
+</code></pre><h1 id="运用的知识："><a href="#运用的知识：" class="headerlink" title="运用的知识："></a>运用的知识：</h1><p>1.字符数组的使用<br>2.以字符数组名为函数参数的使用</p>
+<p><strong><em>此次分享到此结束！！！</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/26/经典问题之最长公共前缀/" data-id="cjuy619e50004pcv9c4kgte82" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/26/经典问题之爬楼梯/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">经典问题之爬楼梯</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/26/经典问题之最长公共前缀/">经典问题之最长公共前缀</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/经典问题之爬楼梯/">经典问题之爬楼梯</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/18/有序链表的合并/">有序链表的合并</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/13/经典问题之找假币/">经典问题之找假币</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/11/店面管理系统/">店面管理系统</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
