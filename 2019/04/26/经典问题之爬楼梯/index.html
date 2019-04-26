@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>经典问题之爬楼梯 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本次的分享是爬楼梯问题 ##题目简介：假设你正在爬楼梯，需要n阶你才能到达楼顶。每次你可以爬1或2个台阶，请问有多少种不同的方法可以爬到楼顶? ##题目分析：从题目我们可以获取到一条重要信息：每次爬一阶或两阶。当我们最后一步登顶时，要么爬一阶，要么爬两阶，如果最后一步爬一阶台阶，则前面爬了n-1阶台阶；如果最后一步爬两阶台阶，则前面爬了n-2阶台阶。以此类推，n-1节台阶又可分为最后一步爬一阶或爬">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典问题之爬楼梯">
+<meta property="og:url" content="http://yoursite.com/2019/04/26/经典问题之爬楼梯/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本次的分享是爬楼梯问题 ##题目简介：假设你正在爬楼梯，需要n阶你才能到达楼顶。每次你可以爬1或2个台阶，请问有多少种不同的方法可以爬到楼顶? ##题目分析：从题目我们可以获取到一条重要信息：每次爬一阶或两阶。当我们最后一步登顶时，要么爬一阶，要么爬两阶，如果最后一步爬一阶台阶，则前面爬了n-1阶台阶；如果最后一步爬两阶台阶，则前面爬了n-2阶台阶。以此类推，n-1节台阶又可分为最后一步爬一阶或爬">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-26T13:38:56.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典问题之爬楼梯">
+<meta name="twitter:description" content="本次的分享是爬楼梯问题 ##题目简介：假设你正在爬楼梯，需要n阶你才能到达楼顶。每次你可以爬1或2个台阶，请问有多少种不同的方法可以爬到楼顶? ##题目分析：从题目我们可以获取到一条重要信息：每次爬一阶或两阶。当我们最后一步登顶时，要么爬一阶，要么爬两阶，如果最后一步爬一阶台阶，则前面爬了n-1阶台阶；如果最后一步爬两阶台阶，则前面爬了n-2阶台阶。以此类推，n-1节台阶又可分为最后一步爬一阶或爬">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-经典问题之爬楼梯" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/经典问题之爬楼梯/" class="article-date">
+  <time datetime="2019-04-26T13:08:08.000Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      经典问题之爬楼梯
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong><em>本次的分享是爬楼梯问题</em></strong></p>
+<p>##题目简介：<br><strong>假设你正在爬楼梯，需要n阶你才能到达楼顶。每次你可以爬1或2个台阶，请问有多少种不同的方法可以爬到楼顶?</strong></p>
+<p>##题目分析：<br><strong>从题目我们可以获取到一条重要信息：每次爬一阶或两阶。当我们最后一步登顶时，要么爬一阶，要么爬两阶，如果最后一步爬一阶台阶，则前面爬了n-1阶台阶；如果最后一步爬两阶台阶，则前面爬了n-2阶台阶。以此类推，n-1节台阶又可分为最后一步爬一阶或爬两阶···，直至剩下一阶或两阶台阶，我们可以清楚的知道爬一阶台阶只有一种方法，爬两阶台阶有两种方法。因此，我们可以用递归方法求出爬楼梯的总方法数，n=1,n=2即为递归的出口。</strong></p>
+<p>##代码实现如下：<br><strong>以下为递归函数的代码：</strong></p>
+<pre><code>int count(int n)
+{
+    if(n == 1)   //函数出口
+        return 1;
+    if(n == 2)   //函数出口
+        return 2;
+    return count(n-1) + count(n-2);
+  //要么最后一次爬一阶台阶(之前爬了n-1阶台阶)，要么爬两阶台阶(之前爬了n-2阶台阶)
+}
+</code></pre><p><strong>以下为主函数代码：</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+int main(void)
+{
+    int n;
+    printf(&quot;请输入你想要爬的楼梯数:&quot;);
+    scanf(&quot;%d&quot;,&amp;n);
+    printf(&quot;爬%d阶楼梯可以有%d种方法!&quot;,n,count(n));
+}
+</code></pre><p><strong><em>以上为对爬楼梯问题的简单分享！！！</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/26/经典问题之爬楼梯/" data-id="cjuy4h1d80002fkv9w7o1fnml" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/18/有序链表的合并/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">有序链表的合并</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/26/经典问题之爬楼梯/">经典问题之爬楼梯</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/18/有序链表的合并/">有序链表的合并</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/13/经典问题之找假币/">经典问题之找假币</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/11/店面管理系统/">店面管理系统</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/11/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
