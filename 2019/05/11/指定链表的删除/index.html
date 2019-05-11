@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>指定链表的删除 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本次分享的问题为指定链表的删除 问题简介给定一个链表，删除链表的倒数第 n 个节点，并且输出删除后的链表。 问题分析 该问题主要考查链表的有关知识，考查链表的删除以及链表的创建 该问题得删除操作是倒序删除节点，我们最先想到的方法大多是先记录节点个数，然后找到要删除的节点位置，完成操作；由于链表的节点个数是已知的，所以我们应该找到一种不用计算节点个数就能完成操作的方法，尽可能的优化算法 若我们创建一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="指定链表的删除">
+<meta property="og:url" content="http://yoursite.com/2019/05/11/指定链表的删除/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本次分享的问题为指定链表的删除 问题简介给定一个链表，删除链表的倒数第 n 个节点，并且输出删除后的链表。 问题分析 该问题主要考查链表的有关知识，考查链表的删除以及链表的创建 该问题得删除操作是倒序删除节点，我们最先想到的方法大多是先记录节点个数，然后找到要删除的节点位置，完成操作；由于链表的节点个数是已知的，所以我们应该找到一种不用计算节点个数就能完成操作的方法，尽可能的优化算法 若我们创建一">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-11T14:52:55.913Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="指定链表的删除">
+<meta name="twitter:description" content="本次分享的问题为指定链表的删除 问题简介给定一个链表，删除链表的倒数第 n 个节点，并且输出删除后的链表。 问题分析 该问题主要考查链表的有关知识，考查链表的删除以及链表的创建 该问题得删除操作是倒序删除节点，我们最先想到的方法大多是先记录节点个数，然后找到要删除的节点位置，完成操作；由于链表的节点个数是已知的，所以我们应该找到一种不用计算节点个数就能完成操作的方法，尽可能的优化算法 若我们创建一">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-指定链表的删除" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/11/指定链表的删除/" class="article-date">
+  <time datetime="2019-05-11T13:06:02.000Z" itemprop="datePublished">2019-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      指定链表的删除
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong><em>本次分享的问题为指定链表的删除</em></strong></p>
+<h2 id="问题简介"><a href="#问题简介" class="headerlink" title="问题简介"></a>问题简介</h2><p><em>给定一个链表，删除链表的倒数第 n 个节点，并且输出删除后的链表。</em></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ol>
+<li>该问题主要考查链表的有关知识，考查链表的删除以及链表的创建</li>
+<li>该问题得删除操作是倒序删除节点，我们最先想到的方法大多是先记录节点个数，然后找到要删除的节点位置，完成操作；由于链表的节点个数是已知的，所以我们应该找到一种不用计算节点个数就能完成操作的方法，尽可能的优化算法</li>
+<li><p>若我们创建一个指针变量 P，让 P 指向第 n 个节点后，接着创建另一个指针变量 S，两个指针变量均向后指向，当 P 指向最后一个节点时，S 恰指向要删除的节点，此时只需将 S-&gt;next=S-&gt;next-&gt;next，完成删除</p>
+<h2 id="代码实现如下"><a href="#代码实现如下" class="headerlink" title="代码实现如下"></a>代码实现如下</h2><p><strong>主函数代码如下:</strong></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+typedef struct data   //定义结构体
+{
+    int num;
+    struct data * next;
+}Data;
+void Create(Data * head);   //创建链表
+void Print(Data * head);   //打印链表
+void Delete(Data * head);  //删除链表
+
+int main(void)
+{
+    Data * head=(Data * )malloc(sizeof(Data));
+    head-&gt;next=NULL;
+    Create(head);
+    Print(head);
+    Delete(head);
+    return 0;
+}
+</code></pre><p> <strong>创建链表的代码如下:</strong></p>
+<pre><code>void Create(Data * head)
+{
+    char ch;
+    Data * temp=head;
+    Data * add=(Data * )malloc(sizeof(Data));
+    do
+    {
+        printf(&quot;\n请输入节点的数据:&quot;);
+        scanf(&quot;%d&quot;,&amp;add-&gt;num);
+        temp-&gt;next=add;
+        temp=add;  //temp一直指向尾节点
+        add=(Data * )malloc(sizeof(Data));
+        printf(&quot;\n是否要继续添加节点?(继续数入Y/y)：&quot;);
+        fflush(stdin);
+        ch=getchar();
+    }while(ch==&apos;Y&apos; || ch==&apos;y&apos;);
+    free(add);  //释放申请的空间
+    temp-&gt;next=NULL;
+}
+</code></pre><p> <strong>删除指定节点的代码如下：</strong></p>
+<pre><code>void Delete(Data * head)
+{
+    int i,n;
+    Data * p=head,* s=head;
+    printf(&quot;\n请输入你想要删除的倒数节点:&quot;);
+    scanf(&quot;%d&quot;,&amp;n);
+    while(n&lt;=0)  //保证 n 大于0
+    {
+        printf(&quot;\n输入错误,请重新输入:&quot;);
+        scanf(&quot;%d&quot;,&amp;n);
+    }
+    for(i=0;i&lt;n;i++)
+    {
+        p=p-&gt;next;
+        if(p==NULL)
+        {
+            printf(&quot;\n输入的删除数据无效!\n&quot;);
+            exit(1);
+        }
+    }
+    while(p-&gt;next)  //找到要删除的节点位置
+    {
+        p=p-&gt;next;
+        s=s-&gt;next;
+    }
+    s-&gt;next=s-&gt;next-&gt;next;  //删除节点
+    Print(head);
+}
+</code></pre></li>
+</ol>
+<p><strong>打印节点的代码如下:</strong></p>
+<pre><code>void Print(Data * head)
+{
+    Data * temp=head-&gt;next;
+    while(temp-&gt;next!=NULL)
+    {
+        printf(&quot;%d-&gt;&quot;,temp-&gt;num);
+        temp=temp-&gt;next;
+    }
+    printf(&quot;%d\n&quot;,temp-&gt;num);
+}
+</code></pre><p><strong><em>本次分享到此结束！</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/11/指定链表的删除/" data-id="cjvjmqfww00000kv92wx4xgsh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/26/经典问题之最长公共前缀/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">经典问题之最长公共前缀</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/11/指定链表的删除/">指定链表的删除</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/经典问题之最长公共前缀/">经典问题之最长公共前缀</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/经典问题之爬楼梯/">经典问题之爬楼梯</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/18/有序链表的合并/">有序链表的合并</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/13/经典问题之找假币/">经典问题之找假币</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
